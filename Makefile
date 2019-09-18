@@ -1,7 +1,9 @@
+PY=python
 PELICAN=pelican
 INPUT=demo-input
 OUTPUT=demo-output
 CONFIG=pelican_demo.py
+PORT=8000
 EXTRAS=
 
 
@@ -13,4 +15,8 @@ clean:
 	[ ! -d $(OUTPUT) ] || rm -rf $(OUTPUT)
 
 
-.PHONY: demo clean
+serve:
+	cd $(OUTPUT) && $(PY) -m pelican.server $(PORT)
+
+
+.PHONY: demo clean serve
