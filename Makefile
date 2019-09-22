@@ -18,6 +18,11 @@ demo: venv
 	$(VENV)/$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFIG) $(EXTRAS)
 
 
+.PHONY: test
+test: venv
+	$(VENV)/python -m unittest
+
+
 .PHONY: clean
 clean:
 	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
