@@ -1,13 +1,42 @@
-PY?=python3
+#
+# PELICAN RULES
+#
+
+STORAGE?=$(CURDIR)
+
 PELICAN=pelican
-INPUTDIR=demo-input
-OUTPUTDIR=demo-output
+INPUTDIR=$(STORAGE)/demo-input
+OUTPUTDIR=$(STORAGE)/demo-output
 CONFIG=pelican_demo.py
 PORT=8000
 EXTRAS=
 
 
-VENVDIR=$(CURDIR)/demo-venv
+.PHONY: demo
+demo: venv
+	[ -d "$(INPUTDIR)" ] || mkdir -p "$(INPUTDIR)"
+	$(VENV)/$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFIG) $(EXTRAS)
+
+
+.PHONY: clean
+clean:
+	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
+
+
+.PHONY: serve
+serve: venv
+	cd $(OUTPUTDIR) && $(VENV)/python -m pelican.server $(PORT)
+
+
+#
+# VIRTUAL ENVIRONMENT RULES
+#
+
+
+PY?=python3
+VENVDIR=$(STORAGE)/.venv
+
+
 ifdef OS
 	VENV=$(VENVDIR)/Scripts
 else
@@ -22,13 +51,12 @@ $(VENV)/activate: setup.py
 	touch $(VENVDIR)/activate
 
 
+.PHONY: venv
+venv: $(VENV)/activate
+
+
 $(VENV)/ipython: $(VENV)/activate
 	$(VENV)/pip install ipython
-
-
-.PHONY: python
-python: venv
-	$(VENV)/python
 
 
 .PHONY: ipython
@@ -36,20 +64,6 @@ ipython: $(VENV)/ipython
 	$(VENV)/ipython
 
 
-.PHONY: venv
-venv: $(VENV)/activate
-
-
-.PHONY: demo
-demo: venv
-	$(VENV)/$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFIG) $(EXTRAS)
-
-
-.PHONY: clean
-clean:
-	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
-
-
-.PHONY: serve
-serve: venv
-	cd $(OUTPUTDIR) && $(VENV)/python -m pelican.server $(PORT)
+.PHONY: python
+python: venv
+	$(VENV)/python
