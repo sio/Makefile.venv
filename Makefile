@@ -84,3 +84,10 @@ python: venv
 .PHONY: clean-venv
 clean-venv:
 	[ ! -d $(VENVDIR) ] || rm -rf $(VENVDIR)
+
+
+.PHONY: show-venv
+show-venv:
+	@$(VENV)/python --version
+	@$(VENV)/pip --version
+	@echo venv: $(VENVDIR)
