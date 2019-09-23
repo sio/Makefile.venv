@@ -33,6 +33,10 @@ serve: venv
 	cd $(OUTPUTDIR) && $(VENV)/python -m pelican.server $(PORT)
 
 
+.PHONY: clean-all
+clean-all: clean clean-venv
+
+
 #
 # VIRTUAL ENVIRONMENT RULES
 #
@@ -75,3 +79,8 @@ ipython: $(VENV)/ipython$(EXE)
 .PHONY: python
 python: venv
 	$(VENV)/python
+
+
+.PHONY: clean-venv
+clean-venv:
+	[ ! -d $(VENVDIR) ] || rm -rf $(VENVDIR)
