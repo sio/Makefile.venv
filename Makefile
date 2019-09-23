@@ -2,7 +2,7 @@
 # PELICAN RULES
 #
 
-STORAGE?=$(CURDIR)
+STORAGE?=$(CURDIR)  # Must be absolute path
 
 PELICAN=pelican
 INPUTDIR=$(STORAGE)/demo-input
