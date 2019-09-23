@@ -88,6 +88,6 @@ clean-venv:
 
 .PHONY: show-venv
 show-venv:
-	@$(VENV)/python --version
+	@$(VENV)/python -c "import sys; print('Python ' + sys.version)"
 	@$(VENV)/pip --version
 	@echo venv: $(VENVDIR)
