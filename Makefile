@@ -44,8 +44,10 @@ VENVDIR=$(STORAGE)/.venv
 
 ifdef OS
 	VENV=$(VENVDIR)/Scripts
+	EXE=.exe
 else
 	VENV=$(VENVDIR)/bin
+	EXE=
 endif
 
 
@@ -60,12 +62,13 @@ $(VENV)/activate: setup.py
 venv: $(VENV)/activate
 
 
-$(VENV)/ipython: $(VENV)/activate
-	$(VENV)/pip install ipython
+$(VENV)/ipython$(EXE): $(VENV)/activate
+	$(VENV)/pip install --upgrade ipython
+	touch $(VENV)/ipython$(EXE)
 
 
 .PHONY: ipython
-ipython: $(VENV)/ipython
+ipython: $(VENV)/ipython$(EXE)
 	$(VENV)/ipython
 
 
