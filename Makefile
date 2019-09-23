@@ -59,7 +59,7 @@ $(VENV)/activate: setup.py
 	$(PY) -m venv $(VENVDIR)
 	$(VENV)/python -m pip install --upgrade pip
 	$(VENV)/pip install -e .
-	touch $(VENVDIR)/activate
+	touch $(VENV)/activate
 
 
 .PHONY: venv
