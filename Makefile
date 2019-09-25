@@ -2,7 +2,6 @@
 # PELICAN RULES
 #
 
-STORAGE?=$(CURDIR)  # Must be absolute path
 
 PELICAN=pelican
 INPUTDIR=$(STORAGE)/demo-input
@@ -44,6 +43,13 @@ clean-all: clean clean-venv
 
 PY?=python3
 VENVDIR=$(STORAGE)/.venv
+
+
+ifdef STORAGE  # Must be an absolute path
+	STORAGE:=$(abspath $(STORAGE))
+else
+	STORAGE=$(CURDIR)
+endif
 
 
 ifdef OS
