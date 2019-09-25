@@ -6,13 +6,13 @@
 
 
 PY?=python3
-VENVDIR=$(STORAGE)/.venv
+VENVDIR=$(WORKDIR)/.venv
 
 
-ifdef STORAGE  # Must be an absolute path
-	STORAGE:=$(abspath $(STORAGE))
+ifdef WORKDIR  # Must be an absolute path
+	WORKDIR:=$(abspath $(WORKDIR))
 else
-	STORAGE=$(CURDIR)
+	WORKDIR=$(CURDIR)
 endif
 
 

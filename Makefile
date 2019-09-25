@@ -2,8 +2,8 @@ include Makefile.venv
 
 
 PELICAN=pelican
-INPUTDIR=$(STORAGE)/demo-input
-OUTPUTDIR=$(STORAGE)/demo-output
+INPUTDIR=$(WORKDIR)/demo-input
+OUTPUTDIR=$(WORKDIR)/demo-output
 CONFIG=pelican_demo.py
 PORT=8000
 EXTRAS=
