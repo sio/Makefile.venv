@@ -56,10 +56,23 @@ else
 endif
 
 
-$(VENV)/activate: setup.py
+ifneq ($(wildcard requirements.txt),)
+	VENVDEPENDS+=requirements.txt
+endif
+ifneq ($(wildcard setup.py),)
+	VENVDEPENDS+=setup.py
+endif
+
+
+$(VENV)/activate: $(VENVDEPENDS)
 	$(PY) -m venv $(VENVDIR)
 	$(VENV)/python -m pip install --upgrade pip
+ifneq ($(wildcard requirements.txt),)
+	$(VENV)/pip install -r requirements.txt
+endif
+ifneq ($(wildcard setup.py),)
 	$(VENV)/pip install -e .
+endif
 	touch $(VENV)/activate
 
 
