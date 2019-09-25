@@ -1,6 +1,4 @@
-#
-# PELICAN RULES
-#
+include Makefile.venv
 
 
 PELICAN=pelican
@@ -34,66 +32,3 @@ serve: venv
 
 .PHONY: clean-all
 clean-all: clean clean-venv
-
-
-#
-# VIRTUAL ENVIRONMENT RULES
-#
-
-
-PY?=python3
-VENVDIR=$(STORAGE)/.venv
-
-
-ifdef STORAGE  # Must be an absolute path
-	STORAGE:=$(abspath $(STORAGE))
-else
-	STORAGE=$(CURDIR)
-endif
-
-
-ifdef OS
-	VENV=$(VENVDIR)/Scripts
-	EXE=.exe
-else
-	VENV=$(VENVDIR)/bin
-	EXE=
-endif
-
-
-$(VENV)/activate: setup.py
-	$(PY) -m venv $(VENVDIR)
-	$(VENV)/python -m pip install --upgrade pip
-	$(VENV)/pip install -e .
-	touch $(VENV)/activate
-
-
-.PHONY: venv
-venv: $(VENV)/activate
-
-
-$(VENV)/ipython$(EXE): $(VENV)/activate
-	$(VENV)/pip install --upgrade ipython
-	touch $(VENV)/ipython$(EXE)
-
-
-.PHONY: ipython
-ipython: $(VENV)/ipython$(EXE)
-	$(VENV)/ipython
-
-
-.PHONY: python
-python: venv
-	$(VENV)/python
-
-
-.PHONY: clean-venv
-clean-venv:
-	[ ! -d $(VENVDIR) ] || rm -rf $(VENVDIR)
-
-
-.PHONY: show-venv
-show-venv:
-	@$(VENV)/python -c "import sys; print('Python ' + sys.version.replace('\n',''))"
-	@$(VENV)/pip --version
-	@echo venv: $(VENVDIR)
