@@ -1,7 +1,38 @@
 #
-# Seamlessly manage Python virtual environment with a Makefile
+# SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
-# Use `include Makefile.venv` to add these targets to your Makefile
+#
+# Use `include Makefile.venv` to add these rules to your Makefile
+#
+# When writing your Makefile use '$(VENV)/python' to refer to the Python
+# interpreter within virtual environment and '$(VENV)/executablename' for any
+# other executable in venv.
+#
+# This Makefile provides the following targets:
+#   venv
+#       Use this as a dependency for any target that requires virtual
+#       environment to be created and configured
+#   python, ipython
+#       Use these to launch interactive Python shell within virtual environment
+#   show-venv
+#       Show versions of Python and pip, and the path to the virtual environment
+#   clean-venv
+#       Remove virtual environment
+#
+# This Makefile can be configured via following variables:
+#   PY
+#       Command name for system Python interpreter. It is used only initialy to
+#       create the virtual environment
+#       Default: python3
+#   WORKDIR
+#       Parent directory for the virtual environment.
+#       Default: current working directory.
+#
+#
+# Copyright (c) 2019 Vitaly Potyarkin
+#
+# Licensed under the Apache License, Version 2.0
+#    <http://www.apache.org/licenses/LICENSE-2.0>
 #
 
 
