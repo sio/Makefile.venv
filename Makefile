@@ -1,6 +1,3 @@
-include Makefile.venv
-
-
 PELICAN=pelican
 INPUTDIR=$(WORKDIR)/demo-input
 OUTPUTDIR=$(WORKDIR)/demo-output
@@ -32,3 +29,6 @@ serve: venv
 
 .PHONY: clean-all
 clean-all: clean clean-venv
+
+
+include Makefile.venv

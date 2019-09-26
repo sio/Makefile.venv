@@ -2,7 +2,8 @@
 # SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
 #
-# Use `include Makefile.venv` to add these rules to your Makefile
+# Insert `include Makefile.venv` at the bottom of your Makefile to enable these
+# rules.
 #
 # When writing your Makefile use '$(VENV)/python' to refer to the Python
 # interpreter within virtual environment and '$(VENV)/executablename' for any
@@ -27,6 +28,9 @@
 #   WORKDIR
 #       Parent directory for the virtual environment.
 #       Default: current working directory.
+#
+# This Makefile was written for GNU Make and may not work with other make
+# implementations.
 #
 #
 # Copyright (c) 2019 Vitaly Potyarkin
