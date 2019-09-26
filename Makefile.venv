@@ -41,7 +41,7 @@
 
 
 PY?=python3
-VENVDIR=$(WORKDIR)/.venv
+VENVDIR?=$(WORKDIR)/.venv
 
 
 ifdef WORKDIR  # Must be an absolute path

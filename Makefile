@@ -7,8 +7,8 @@ export DEMO_THEME
 
 
 PELICAN=pelican
-INPUTDIR=$(WORKDIR)/demo-input
-OUTPUTDIR=$(WORKDIR)/demo-output
+DEMO_INPUT=$(WORKDIR)/demo-input
+DEMO_OUTPUT?=$(WORKDIR)/demo-output
 CONFIG=pelican_demo.py
 PORT=8000
 EXTRAS=
@@ -16,8 +16,8 @@ EXTRAS=
 
 .PHONY: demo
 demo: venv $(DEMO_STORAGE)/.ready
-	[ -d "$(INPUTDIR)" ] || mkdir -p "$(INPUTDIR)"
-	$(VENV)/$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFIG) $(EXTRAS)
+	[ -d "$(DEMO_INPUT)" ] || mkdir -p "$(DEMO_INPUT)"
+	$(VENV)/$(PELICAN) $(DEMO_INPUT) -o $(DEMO_OUTPUT) -s $(CONFIG) $(EXTRAS)
 
 
 $(DEMO_STORAGE)/.ready: $(CONFIG)
@@ -32,13 +32,13 @@ test: venv
 
 .PHONY: clean-demo
 clean-demo:
-	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
+	[ ! -d $(DEMO_OUTPUT) ] || rm -rf $(DEMO_OUTPUT)
 	[ ! -d $(DEMO_STORAGE) ] || rm -rf $(DEMO_STORAGE)
 
 
 .PHONY: serve
 serve: venv
-	cd $(OUTPUTDIR) && $(VENV)/python -m pelican.server $(PORT)
+	cd $(DEMO_OUTPUT) && $(VENV)/python -m pelican.server $(PORT)
 
 
 .PHONY: clean
