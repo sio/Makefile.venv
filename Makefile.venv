@@ -42,6 +42,7 @@
 
 PY?=python3
 VENVDIR?=$(WORKDIR)/.venv
+MARKER=.initialized-with-Makefile.venv
 
 
 ifdef WORKDIR  # Must be an absolute path
@@ -68,7 +69,7 @@ ifneq ($(wildcard setup.py),)
 endif
 
 
-$(VENV)/activate: $(VENVDEPENDS)
+$(VENV)/$(MARKER): $(VENVDEPENDS)
 	$(PY) -m venv $(VENVDIR)
 	$(VENV)/python -m pip install --upgrade pip
 ifneq ($(wildcard requirements.txt),)
@@ -77,11 +78,11 @@ endif
 ifneq ($(wildcard setup.py),)
 	$(VENV)/pip install -e .
 endif
-	touch $(VENV)/activate
+	touch $(VENV)/$(MARKER)
 
 
 .PHONY: venv
-venv: $(VENV)/activate
+venv: $(VENV)/$(MARKER)
 
 
 $(VENV)/ipython$(EXE): $(VENV)/activate
