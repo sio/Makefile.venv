@@ -1,9 +1,7 @@
 DEMO_REPO?=sio/bash-complete-partial-path
 DEMO_STORAGE?=$(WORKDIR)/demo-github-data
-DEMO_THEME?=$(CURDIR)/../pelican-alchemy/alchemy
 export DEMO_REPO
 export DEMO_STORAGE
-export DEMO_THEME
 
 
 PELICAN=pelican
