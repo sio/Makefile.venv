@@ -4,6 +4,11 @@ export DEMO_REPO
 export DEMO_STORAGE
 
 
+
+DOCS_OUTPUT?=$(WORKDIR)/public
+export DOCS_OUTPUT
+
+
 PELICAN=pelican
 DEMO_INPUT=$(WORKDIR)/demo-input
 DEMO_OUTPUT?=$(WORKDIR)/demo-output
@@ -44,12 +49,12 @@ docs: venv
 
 .PHONY: serve-docs
 serve-docs: venv
-	cd public && $(VENV)/python -m http.server
+	cd $(DOCS_OUTPUT) && $(VENV)/python -m http.server
 
 
 .PHONY: clean-docs
 clean-docs:
-	[ ! -d public ] || rm -rf public  # specified in mkdocs.yml
+	[ ! -d $(DOCS_OUTPUT) ] || rm -rf $(DOCS_OUTPUT)
 
 
 .PHONY: test
