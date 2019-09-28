@@ -24,6 +24,17 @@ $(DEMO_STORAGE)/.ready: $(CONFIG)
 	touch $(DEMO_STORAGE)/.ready
 
 
+.PHONY: serve
+serve: venv
+	cd $(DEMO_OUTPUT) && $(VENV)/python -m pelican.server $(PORT)
+
+
+.PHONY: clean-demo
+clean-demo:
+	[ ! -d $(DEMO_OUTPUT) ] || rm -rf $(DEMO_OUTPUT)
+	[ ! -d $(DEMO_STORAGE) ] || rm -rf $(DEMO_STORAGE)
+
+
 .PHONY: docs
 docs: venv
 	$(VENV)/pip install mkdocs mkdocs-material pygments
@@ -36,25 +47,18 @@ serve-docs: venv
 	cd public && $(VENV)/python -m http.server
 
 
+.PHONY: clean-docs
+clean-docs:
+	[ ! -d public ] || rm -rf public  # specified in mkdocs.yml
+
+
 .PHONY: test
 test: venv
 	$(VENV)/python -m unittest
 
 
-.PHONY: clean-demo
-clean-demo:
-	[ ! -d $(DEMO_OUTPUT) ] || rm -rf $(DEMO_OUTPUT)
-	[ ! -d $(DEMO_STORAGE) ] || rm -rf $(DEMO_STORAGE)
-	[ ! -d public ] || rm -rf public  # specified in mkdocs.yml
-
-
-.PHONY: serve
-serve: venv
-	cd $(DEMO_OUTPUT) && $(VENV)/python -m pelican.server $(PORT)
-
-
 .PHONY: clean
-clean: clean-demo clean-venv
+clean: clean-demo clean-docs clean-venv
 
 
 include Makefile.venv
