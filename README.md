@@ -62,7 +62,7 @@ This Makefile was written for GNU Make and may not work with other make
 implementations.
 
 
-## Sample
+## Samples
 
 Makefile:
 
@@ -73,6 +73,9 @@ test: venv
 
 include Makefile.venv
 ```
+
+Larger sample from a real project can be seen
+[here](https://github.com/sio/issyours/blob/master/Makefile).
 
 Command line:
 
