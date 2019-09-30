@@ -29,7 +29,7 @@ Makefile.venv:
 	curl \
 		-o Makefile.fetched \
 		-L "https://github.com/sio/Makefile.venv/raw/v2019.09.30/Makefile.venv"
-	echo "4992fb6398ea3207e85dcd075ac9c68ea573c26cdf48f189c01f87c874b01ee4 *Makefile.fetched" \
+	echo "d28c07037c3e18657da987749738cfbb30c5956c9fdf96edf319f3df2eddc255 *Makefile.fetched" \
 		| sha256sum.exe --check - \
 		&& mv Makefile.fetched Makefile.venv
 ```
