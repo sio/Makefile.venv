@@ -83,6 +83,9 @@ include Makefile.venv
 
 Larger sample from a real project can be seen
 [here](https://github.com/sio/issyours/blob/master/Makefile).
+Also see [an inroductory blog
+post](https://potyarkin.ml/posts/2019/manage-python-virtual-environment-from-your-makefile/)
+from project author.
 
 Command line:
 
