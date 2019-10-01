@@ -64,6 +64,10 @@ This Makefile can be configured via following variables:
 This Makefile was written for GNU Make and may not work with other make
 implementations.
 
+This Makefile has been tested both on Linux and on Windows (Msys). Any
+inconsistency encountered when running on Windows should be considered a bug
+and should be reported via [issues].
+
 
 ## Samples
 
@@ -111,7 +115,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 ## Support and contributing
 
 If you need help with using this Makefile or including it into your project,
-please create **[an issue](https://github.com/sio/Makefile.venv/issues)**.
+please create **[an issue][issues]**.
 Issues are also the primary venue for reporting bugs and posting feature
 requests. General discussion related to this project is also acceptable and
 very welcome!
@@ -130,6 +134,8 @@ of your message. Also please keep in mind that public discussion channels are
 preferable because that way many other people may benefit from reading past
 conversations. My email is visible under the GitHub profile and in the commit
 log.
+
+[issues]: https://github.com/sio/Makefile.venv/issues
 
 
 ## License and copyright
