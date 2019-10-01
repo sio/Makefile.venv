@@ -47,6 +47,9 @@ This Makefile provides the following targets:
   environment to be created and configured
 - `python, ipython` - use these to launch interactive Python shell within
   virtual environment
+- `shell, bash, zsh` - launch interactive command line shell. `shell` target
+  launches the default shell Makefile executes its rules in (usually /bin/sh).
+  `bash` and `zsh` can be used to refer to the specific desired shell.
 - `show-venv` - show versions of Python and pip, and the path to the virtual
   environment
 - `clean-venv` - remove virtual environment
