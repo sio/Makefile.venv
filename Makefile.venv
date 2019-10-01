@@ -1,7 +1,7 @@
 #
 # SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
-# https://github.com/sio/Makefile.venv             v2019.09.30
+# https://github.com/sio/Makefile.venv             v2019.10.01
 #
 #
 # Insert `include Makefile.venv` at the bottom of your Makefile to enable these
@@ -17,6 +17,10 @@
 #       environment to be created and configured
 #   python, ipython
 #       Use these to launch interactive Python shell within virtual environment
+#   shell, bash, zsh
+#   	Launch interactive command line shell. "shell" target launches the
+#   	default shell Makefile executes its rules in (usually /bin/sh).
+#   	"bash" and "zsh" can be used to refer to the specific desired shell.
 #   show-venv
 #       Show versions of Python and pip, and the path to the virtual environment
 #   clean-venv
@@ -100,6 +104,21 @@ ipython: $(VENV)/ipython$(EXE)
 .PHONY: python
 python: venv
 	$(VENV)/python
+
+
+.PHONY: shell
+shell: venv
+	. $(VENV)/activate && $(notdir $(SHELL))
+
+
+.PHONY: bash
+bash: venv
+	. $(VENV)/activate && bash
+
+
+.PHONY: zsh
+zsh: venv
+	. $(VENV)/activate && zsh
 
 
 .PHONY: clean-venv
