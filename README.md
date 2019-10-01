@@ -56,7 +56,7 @@ This Makefile provides the following targets:
 
 This Makefile can be configured via following variables:
 
-- `PY` - Command name for system Python interpreter. It is used only initialy
+- `PY` - Command name for system Python interpreter. It is used only initially
   to create the virtual environment. *Default: python3*
 - `WORKDIR` - Parent directory for the virtual environment. *Default: current
   working directory*
@@ -83,7 +83,7 @@ include Makefile.venv
 
 Larger sample from a real project can be seen
 [here](https://github.com/sio/issyours/blob/master/Makefile).
-Also see [an inroductory blog
+Also see [an introductory blog
 post](https://potyarkin.ml/posts/2019/manage-python-virtual-environment-from-your-makefile/)
 from project author.
 
