@@ -1,2 +1,5 @@
 # Used for testing "include Makefile.venv"
-Makefile
+/Makefile
+
+# Python tests
+*.pyc
