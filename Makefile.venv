@@ -1,7 +1,7 @@
 #
 # SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
-# https://github.com/sio/Makefile.venv             v2019.10.03
+# https://github.com/sio/Makefile.venv             v2019.10.04
 #
 #
 # Insert `include Makefile.venv` at the bottom of your Makefile to enable these
@@ -111,14 +111,9 @@ shell: venv
 	. $(VENV)/activate && exec $(notdir $(SHELL))
 
 
-.PHONY: bash
-bash: venv
-	. $(VENV)/activate && exec bash
-
-
-.PHONY: zsh
-zsh: venv
-	. $(VENV)/activate && exec zsh
+.PHONY: bash zsh
+bash zsh: venv
+	. $(VENV)/activate && exec $@
 
 
 .PHONY: clean-venv
