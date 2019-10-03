@@ -3,8 +3,12 @@ from hashlib import sha256
 from unittest import TestCase
 
 
-def get_checksum(filename):
-    pass
+def calculate_checksum(filename):
+    with open(filename) as f:
+        checksum = sha256()
+        for line in f:
+            checksum.update(line.encode())
+    return checksum.hexdigest()
 
 
 class TestChecksum(TestCase):
@@ -12,21 +16,16 @@ class TestChecksum(TestCase):
     readme = 'README.md'
     pattern = re.compile(r'\b[0-9a-f]{64}\b', re.IGNORECASE)
 
-    def test_checksum(self):
-        '''Check that installation instructions contain valid checksum'''
-        with open(self.readme) as f:
+    def read_checksum(self, filename):
+        with open(filename) as f:
             match = self.pattern.search(f.read())
         if not match:
             raise ValueError('checksum not found in {}'.format(self.readme))
-        recorded = match.group()
+        return match.group().lower()
 
-        with open(self.makefile) as mk:
-            checksum = sha256()
-            for line in mk:
-                checksum.update(line.encode())
-
-        self.assertEqual(
-            recorded.lower(),
-            checksum.hexdigest(),
-        )
+    def test_checksum(self):
+        '''Check that installation instructions contain valid checksum'''
+        recorded = self.read_checksum(self.readme)
+        calculated = calculate_checksum(self.makefile)
+        self.assertEqual(recorded, calculated)
 
