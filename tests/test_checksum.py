@@ -20,7 +20,7 @@ class TestChecksum(TestCase):
         with open(filename) as f:
             match = self.pattern.search(f.read())
         if not match:
-            raise ValueError('checksum not found in {}'.format(self.readme))
+            raise ValueError('checksum not found in {}'.format(filename))
         return match.group().lower()
 
     def test_checksum(self):
