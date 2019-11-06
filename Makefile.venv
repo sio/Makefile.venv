@@ -25,6 +25,17 @@
 #       Show versions of Python and pip, and the path to the virtual environment
 #   clean-venv
 #       Remove virtual environment
+#   $(VENV)/executable_name
+#   	Install `executable_name` with pip. Only packages with names matching
+#   	the name of the corresponding executable are supported.
+#   	Use this as a lightweight mechanism for development dependencies
+#   	tracking. E.g. for one-off tools that are not required in every
+#   	developer's environment, therefore are not included into
+#   	requirements.txt or setup.py.
+#   	Example:
+#   		codestyle: $(VENV)/pyflakes
+#   			$(VENV)/pyflakes .
+#   	See `ipython` target below for another example.
 #
 # This Makefile can be configured via following variables:
 #   PY
@@ -34,6 +45,9 @@
 #   WORKDIR
 #       Parent directory for the virtual environment.
 #       Default: current working directory.
+#   VENVDIR
+#   	Python virtual environment directory.
+#   	Default: $(WORKDIR)/.venv
 #
 # This Makefile was written for GNU Make and may not work with other make
 # implementations.
@@ -46,10 +60,18 @@
 #
 
 
+#
+# Configuration variables
+#
+
 PY?=python3
 VENVDIR?=$(WORKDIR)/.venv
 MARKER=.initialized-with-Makefile.venv
 
+
+#
+# Internal variable resolution
+#
 
 ifdef WORKDIR  # Must be an absolute path
 	WORKDIR:=$(abspath $(WORKDIR))
@@ -57,8 +79,7 @@ else
 	WORKDIR=$(CURDIR)
 endif
 
-
-ifdef OS
+ifdef OS  # Windows support
 	VENV=$(VENVDIR)/Scripts
 	EXE=.exe
 else
@@ -67,13 +88,34 @@ else
 endif
 
 
+#
+# Virtual environment
+#
+
+.PHONY: venv
+venv: $(VENV)/$(MARKER)
+
+.PHONY: clean-venv
+clean-venv:
+	[ ! -d $(VENVDIR) ] || rm -rf $(VENVDIR)
+
+.PHONY: show-venv
+show-venv: venv
+	@$(VENV)/python -c "import sys; print('Python ' + sys.version.replace('\n',''))"
+	@$(VENV)/pip --version
+	@echo venv: $(VENVDIR)
+
+
+#
+# Dependencies
+#
+
 ifneq ($(wildcard requirements.txt),)
 	VENVDEPENDS+=requirements.txt
 endif
 ifneq ($(wildcard setup.py),)
 	VENVDEPENDS+=setup.py
 endif
-
 
 $(VENV)/$(MARKER): $(VENVDEPENDS)
 	$(PY) -m venv $(VENVDIR)
@@ -87,9 +129,30 @@ endif
 	touch $(VENV)/$(MARKER)
 
 
-.PHONY: venv
-venv: $(VENV)/$(MARKER)
+#
+# Interactive shells
+#
 
+.PHONY: python
+python: venv
+	exec $(VENV)/python
+
+.PHONY: ipython
+ipython: $(VENV)/ipython
+	exec $(VENV)/ipython
+
+.PHONY: shell
+shell: venv
+	. $(VENV)/activate && exec $(notdir $(SHELL))
+
+.PHONY: bash zsh
+bash zsh: venv
+	. $(VENV)/activate && exec $@
+
+
+#
+# Commandline tools (wildcard rule, executable name must match package name)
+#
 
 ifneq ($(EXE),)
 $(VENV)/%: $(VENV)/%$(EXE) ;
@@ -97,39 +160,6 @@ $(VENV)/%: $(VENV)/%$(EXE) ;
 .PRECIOUS: $(VENV)/%$(EXE)
 endif
 
-
 $(VENV)/%$(EXE): $(VENV)/$(MARKER)
 	$(VENV)/pip install --upgrade $*
 	touch $@
-
-
-.PHONY: ipython
-ipython: $(VENV)/ipython
-	exec $(VENV)/ipython
-
-
-.PHONY: python
-python: venv
-	exec $(VENV)/python
-
-
-.PHONY: shell
-shell: venv
-	. $(VENV)/activate && exec $(notdir $(SHELL))
-
-
-.PHONY: bash zsh
-bash zsh: venv
-	. $(VENV)/activate && exec $@
-
-
-.PHONY: clean-venv
-clean-venv:
-	[ ! -d $(VENVDIR) ] || rm -rf $(VENVDIR)
-
-
-.PHONY: show-venv
-show-venv: venv
-	@$(VENV)/python -c "import sys; print('Python ' + sys.version.replace('\n',''))"
-	@$(VENV)/pip --version
-	@echo venv: $(VENVDIR)

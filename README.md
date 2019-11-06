@@ -28,8 +28,8 @@ include Makefile.venv
 Makefile.venv:
 	curl \
 		-o Makefile.fetched \
-		-L "https://github.com/sio/Makefile.venv/raw/v2019.10.04/Makefile.venv"
-	echo "7a0a5a7a25ab959c6686b839cd45eb522f1a0662aa6096be5d56106c940aee95 *Makefile.fetched" \
+		-L "https://github.com/sio/Makefile.venv/raw/v2019.11.06/Makefile.venv"
+	echo "32403b854e9708b71b38ebf9359d1ef0fbb218fe6165ab97986f63e8379301c6 *Makefile.fetched" \
 		| sha256sum --check - \
 		&& mv Makefile.fetched Makefile.venv
 ```
@@ -53,6 +53,21 @@ This Makefile provides the following targets:
 - `show-venv` - show versions of Python and pip, and the path to the virtual
   environment
 - `clean-venv` - remove virtual environment
+- `$(VENV)/executable_name` - install `executable_name` with pip.
+
+  Only packages with names matching the name of the corresponding executable
+  are supported.
+
+  Use this as a lightweight mechanism for development dependencies tracking.
+  E.g. for one-off tools that are not required in every developer's
+  environment, therefore are not included into `requirements.txt` or `setup.py`.
+
+  Example (see `ipython` target for another example):
+
+```Makefile
+    codestyle: $(VENV)/pyflakes
+        $(VENV)/pyflakes .
+```
 
 This Makefile can be configured via following variables:
 
@@ -60,6 +75,7 @@ This Makefile can be configured via following variables:
   to create the virtual environment. *Default: python3*
 - `WORKDIR` - Parent directory for the virtual environment. *Default: current
   working directory*
+- `VENVDIR` - Python virtual environment directory. *Default: $(WORKDIR)/.venv*
 
 This Makefile was written for GNU Make and may not work with other make
 implementations.
