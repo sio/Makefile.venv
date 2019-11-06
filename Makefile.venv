@@ -1,7 +1,7 @@
 #
 # SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
-# https://github.com/sio/Makefile.venv             v2019.10.04
+# https://github.com/sio/Makefile.venv             v2019.11.06
 #
 #
 # Insert `include Makefile.venv` at the bottom of your Makefile to enable these
@@ -91,13 +91,20 @@ endif
 venv: $(VENV)/$(MARKER)
 
 
-$(VENV)/ipython$(EXE): $(VENV)/activate
-	$(VENV)/pip install --upgrade ipython
-	touch $(VENV)/ipython$(EXE)
+ifneq ($(EXE),)
+$(VENV)/%: $(VENV)/%$(EXE) ;
+.PHONY:    $(VENV)/%
+.PRECIOUS: $(VENV)/%$(EXE)
+endif
+
+
+$(VENV)/%$(EXE): $(VENV)/$(MARKER)
+	$(VENV)/pip install --upgrade $*
+	touch $@
 
 
 .PHONY: ipython
-ipython: $(VENV)/ipython$(EXE)
+ipython: $(VENV)/ipython
 	exec $(VENV)/ipython
 
 
