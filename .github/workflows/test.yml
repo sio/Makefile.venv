@@ -7,5 +7,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Run Python unittest framework
-        run:  python3 -m unittest -v
+      - name: Run automated release tests
+        run:  make -C tests test
