@@ -8,6 +8,7 @@ class TestVersion(TestCase):
     pattern = re.compile(r'\b(v\d{4}\.\d{2}\.\d{2})\b', re.IGNORECASE)
     readme = 'README.md'
     makefile = 'Makefile.venv'
+    changelog = 'CHANGELOG.md'
 
     def get_version(self, filename):
         with open(filename) as f:
@@ -33,3 +34,17 @@ class TestVersion(TestCase):
             raise ValueError('version pattern not found in {!r}'.format(' '.join(cmd)))
         git_version = match.group(1)
         self.assertEqual(git_version, self.get_version(self.makefile))
+
+    def test_changelog(self):
+        '''Check that changelog contains an entry for current version'''
+        version = self.get_version(self.makefile)
+        header = '## %s' % version
+        with open(self.changelog) as changelog:
+            for line in changelog:
+                if line.startswith(header):
+                    break
+            else:
+                raise AssertionError('header not found in {changelog}: {header!r}'.format(
+                    header=header,
+                    changelog=self.changelog,
+                ))
