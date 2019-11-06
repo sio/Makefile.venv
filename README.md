@@ -29,7 +29,7 @@ Makefile.venv:
 	curl \
 		-o Makefile.fetched \
 		-L "https://github.com/sio/Makefile.venv/raw/v2019.11.06/Makefile.venv"
-	echo "32403b854e9708b71b38ebf9359d1ef0fbb218fe6165ab97986f63e8379301c6 *Makefile.fetched" \
+	echo "93744514780c15f916dd0e26e5827afae23b92cc62704bb2dd8b9e2bb0370a96 *Makefile.fetched" \
 		| sha256sum --check - \
 		&& mv Makefile.fetched Makefile.venv
 ```
@@ -61,6 +61,9 @@ This Makefile provides the following targets:
   Use this as a lightweight mechanism for development dependencies tracking.
   E.g. for one-off tools that are not required in every developer's
   environment, therefore are not included into `requirements.txt` or `setup.py`.
+
+  **Note:** Rules using such target or dependency MUST be defined below
+  `include` directive to make use of correct $(VENV) value.
 
   Example (see `ipython` target for another example):
 
