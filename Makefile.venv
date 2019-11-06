@@ -77,17 +77,17 @@ MARKER=.initialized-with-Makefile.venv
 #
 
 ifdef WORKDIR  # Must be an absolute path
-	WORKDIR:=$(abspath $(WORKDIR))
+WORKDIR:=$(abspath $(WORKDIR))
 else
-	WORKDIR=$(CURDIR)
+WORKDIR=$(CURDIR)
 endif
 
 ifdef OS  # Windows support
-	VENV=$(VENVDIR)/Scripts
-	EXE=.exe
+VENV=$(VENVDIR)/Scripts
+EXE=.exe
 else
-	VENV=$(VENVDIR)/bin
-	EXE=
+VENV=$(VENVDIR)/bin
+EXE=
 endif
 
 
@@ -114,10 +114,10 @@ show-venv: venv
 #
 
 ifneq ($(wildcard requirements.txt),)
-	VENVDEPENDS+=requirements.txt
+VENVDEPENDS+=requirements.txt
 endif
 ifneq ($(wildcard setup.py),)
-	VENVDEPENDS+=setup.py
+VENVDEPENDS+=setup.py
 endif
 
 $(VENV)/$(MARKER): $(VENVDEPENDS)
