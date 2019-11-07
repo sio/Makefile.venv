@@ -134,6 +134,13 @@ Type "help", "copyright", "credits" or "license" for more information.
 ```
 
 
+## Demo screencast
+
+<a href="https://asciinema.org/a/279646" target="_blank">
+<img src="https://asciinema.org/a/279646.svg" title="Demo screencast"/>
+</a>
+
+
 ## Support and contributing
 
 If you need help with using this Makefile or including it into your project,
