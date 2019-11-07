@@ -12,6 +12,16 @@
 -->
 
 
+## v2019.11.07
+
+* Virtual environment creation happens only once. Dependencies change does not
+  trigger a redundant call to `-m venv` if environment already exists.
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2019.11.07)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2019.11.07)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2019.11.06...v2019.11.07)
+
+
 ## v2019.11.06
 
 * New pattern rule for rarely used dependencies (CLI tools in virtual

@@ -1,7 +1,7 @@
 #
 # SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
-# https://github.com/sio/Makefile.venv             v2019.11.06
+# https://github.com/sio/Makefile.venv             v2019.11.07
 #
 #
 # Insert `include Makefile.venv` at the bottom of your Makefile to enable these
@@ -120,8 +120,10 @@ ifneq ($(wildcard setup.py),)
 VENVDEPENDS+=setup.py
 endif
 
-$(VENV)/$(MARKER): $(VENVDEPENDS)
+$(VENV):
 	$(PY) -m venv $(VENVDIR)
+
+$(VENV)/$(MARKER): $(VENVDEPENDS) | $(VENV)
 	$(VENV)/python -m pip install --upgrade pip
 ifneq ($(wildcard requirements.txt),)
 	$(VENV)/pip install -r requirements.txt
