@@ -62,7 +62,7 @@ This Makefile provides the following targets:
   E.g. for one-off tools that are not required in every developer's
   environment, therefore are not included into `requirements.txt` or `setup.py`.
 
-  **Note:** Rules using such target or dependency MUST be defined below
+  **Note:** Rules using such dependency MUST be defined below
   `include` directive to make use of correct $(VENV) value.
 
   Example (see `ipython` target for another example):
