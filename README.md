@@ -1,6 +1,6 @@
 # Seamlessly manage Python virtual environment with a Makefile
 
-`Makefile.venv` takes care of creating, updating and invoking Python virtual
+*Makefile.venv* takes care of creating, updating and invoking Python virtual
 environment that you can use in your Makefiles. It will allow you to reduce
 venv related routines to almost zero!
 
@@ -9,7 +9,7 @@ venv related routines to almost zero!
 
 ### Recommended method
 
-Copy [`Makefile.venv`](Makefile.venv) to your project directory and add
+Copy [*Makefile.venv*](Makefile.venv) to your project directory and add
 include statement to the bottom of your `Makefile`:
 
 ```make
@@ -41,49 +41,84 @@ When writing your Makefile use `$(VENV)/python` to refer to the Python
 interpreter within virtual environment and `$(VENV)/executablename` for any
 other executable in venv.
 
-This Makefile provides the following targets:
+### Targets
 
-- `venv` - use this as a dependency for any target that requires virtual
-  environment to be created and configured
-- `python, ipython` - use these to launch interactive Python shell within
-  virtual environment
-- `shell, bash, zsh` - launch interactive command line shell. `shell` target
-  launches the default shell Makefile executes its rules in (usually /bin/sh).
-  `bash` and `zsh` can be used to refer to the specific desired shell.
-- `show-venv` - show versions of Python and pip, and the path to the virtual
-  environment
-- `clean-venv` - remove virtual environment
-- `$(VENV)/executable_name` - install `executable_name` with pip.
+*Makefile.venv* provides the following targets. Some are meant to be executed
+directly via `make $target`, some are meant to be dependencies for other
+targets written by you.
 
-  Only packages with names matching the name of the corresponding executable
-  are supported.
+##### venv
 
-  Use this as a lightweight mechanism for development dependencies tracking.
-  E.g. for one-off tools that are not required in every developer's
-  environment, therefore are not included into `requirements.txt` or `setup.py`.
+Use this as a dependency for any target that requires virtual environment to
+be created and configured
 
-  **Note:** Rules using such dependency MUST be defined below
-  `include` directive to make use of correct $(VENV) value.
+##### python, ipython
 
-  Example (see `ipython` target for another example):
+Execute these targets to launch interactive Python shell within virtual
+environment. Ipython is not installed by default when creating the virtual
+environment but will be installed automatically when called for the first
+time.
+
+##### shell, bash, zsh
+
+Execute these targets to launch interactive command line shell. `shell` target
+launches the default shell Makefile executes its rules in (usually /bin/sh).
+`bash` and `zsh` can be used to refer to the specific desired shell (if it's
+installed).
+
+##### show-venv
+
+Execute this target to show versions of Python and pip, and the path to the
+virtual environment. Use this for debugging purposes.
+
+##### clean-venv
+
+Execute this target to remove virtual environment. You can add this as a
+dependency to the `clean` target in your main Makefile.
+
+##### $(VENV)/executablename
+
+Use this target as a dependency for tasks that need `executablename` to be
+installed if `executablename` is not listed as project's dependency neither in
+`requirements.txt` nor in `setup.py`. Only packages with names matching the
+name of the corresponding executable are supported.
+
+This can be a lightweight mechanism for development dependencies tracking.
+E.g. for one-off tools that are not required in every developer's
+environment, therefore are not included in formal dependency lists.
+
+**Note:** Rules using such dependency MUST be defined below
+`include` directive to make use of correct $(VENV) value.
+
+Example (see `ipython` target for another example):
 
 ```Makefile
-    codestyle: $(VENV)/pyflakes
-        $(VENV)/pyflakes .
+codestyle: $(VENV)/pyflakes  # `venv` dependency is assumed and may be omitted
+	$(VENV)/pyflakes .
 ```
 
-This Makefile can be configured via following variables:
+### Variables
 
-- `PY` - Command name for system Python interpreter. It is used only initially
-  to create the virtual environment. *Default: python3*
-- `WORKDIR` - Parent directory for the virtual environment. *Default: current
-  working directory*
-- `VENVDIR` - Python virtual environment directory. *Default: $(WORKDIR)/.venv*
+*Makefile.venv* can be configured via following variables:
 
-This Makefile was written for GNU Make and may not work with other make
+##### PY
+
+Command name for system Python interpreter. It is used only initially to
+create the virtual environment. *Default: python3*
+
+##### WORKDIR
+
+Parent directory for the virtual environment. *Default: current working
+directory*
+
+##### VENVDIR
+
+Python virtual environment directory. *Default: $(WORKDIR)/.venv*
+
+*Makefile.venv* was written for GNU Make and may not work with other make
 implementations.
 
-This Makefile has been tested both on Linux and on Windows (Msys). Any
+*Makefile.venv* has been tested both on Linux and on Windows (Msys). Any
 inconsistency encountered when running on Windows should be considered a bug
 and should be reported via [issues].
 
