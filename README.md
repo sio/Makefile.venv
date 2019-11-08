@@ -41,7 +41,15 @@ When writing your Makefile use `$(VENV)/python` to refer to the Python
 interpreter within virtual environment and `$(VENV)/executablename` for any
 other executable in venv.
 
-### Targets
+
+## Demo screencast
+
+<a href="https://asciinema.org/a/279646" target="_blank">
+<img src="https://asciinema.org/a/279646.svg" title="Demo screencast"/>
+</a>
+
+
+## Targets
 
 *Makefile.venv* provides the following targets. Some are meant to be executed
 directly via `make $target`, some are meant to be dependencies for other
@@ -97,7 +105,7 @@ codestyle: $(VENV)/pyflakes  # `venv` dependency is assumed and may be omitted
 	$(VENV)/pyflakes .
 ```
 
-### Variables
+## Variables
 
 *Makefile.venv* can be configured via following variables:
 
@@ -167,13 +175,6 @@ Python 3.5.4 (v3.5.4:3f56838, Aug  8 2017, 02:07:06) [MSC v.1900 32 bit (Intel)]
 Type "help", "copyright", "credits" or "license" for more information.
 >>> _
 ```
-
-
-## Demo screencast
-
-<a href="https://asciinema.org/a/279646" target="_blank">
-<img src="https://asciinema.org/a/279646.svg" title="Demo screencast"/>
-</a>
 
 
 ## Support and contributing
