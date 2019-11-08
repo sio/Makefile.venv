@@ -45,6 +45,10 @@
 #       Command name for system Python interpreter. It is used only initialy to
 #       create the virtual environment
 #       Default: python3
+#   REQUIREMENTS_TXT
+#       Space separated list of paths to requirements.txt files.
+#       Paths are resolved relative to current working directory.
+#       Default: requirements.txt
 #   WORKDIR
 #       Parent directory for the virtual environment.
 #       Default: current working directory.
@@ -69,6 +73,7 @@
 
 PY?=python3
 VENVDIR?=$(WORKDIR)/.venv
+REQUIREMENTS_TXT?=requirements.txt  # Multiple paths are supported (space separated)
 MARKER=.initialized-with-Makefile.venv
 
 
@@ -113,9 +118,11 @@ show-venv: venv
 # Dependencies
 #
 
-ifneq ($(wildcard requirements.txt),)
-VENVDEPENDS+=requirements.txt
+_REQUIREMENTS=$(strip $(foreach path, $(REQUIREMENTS_TXT), $(wildcard $(path))))
+ifneq ($(_REQUIREMENTS),)
+VENVDEPENDS+=$(_REQUIREMENTS)
 endif
+
 ifneq ($(wildcard setup.py),)
 VENVDEPENDS+=setup.py
 endif
@@ -125,8 +132,8 @@ $(VENV):
 
 $(VENV)/$(MARKER): $(VENVDEPENDS) | $(VENV)
 	$(VENV)/python -m pip install --upgrade pip
-ifneq ($(wildcard requirements.txt),)
-	$(VENV)/pip install -r requirements.txt
+ifneq ($(_REQUIREMENTS),)
+	$(VENV)/pip install $(foreach path,$(_REQUIREMENTS),-r $(path))
 endif
 ifneq ($(wildcard setup.py),)
 	$(VENV)/pip install -e .

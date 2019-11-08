@@ -114,6 +114,12 @@ codestyle: $(VENV)/pyflakes  # `venv` dependency is assumed and may be omitted
 Command name for system Python interpreter. It is used only initially to
 create the virtual environment. *Default: python3*
 
+##### REQUIREMENTS_TXT
+
+Space separated list of paths to requirements.txt files.
+Paths are resolved relative to current working directory.
+*Default: requirements.txt*
+
 ##### WORKDIR
 
 Parent directory for the virtual environment. *Default: current working
