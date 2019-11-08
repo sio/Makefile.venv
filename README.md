@@ -58,7 +58,20 @@ targets written by you.
 ##### venv
 
 Use this as a dependency for any target that requires virtual environment to
-be created and configured
+be created and configured.
+
+*venv* is a .PHONY target and rules that depend on it will be executed every
+time make is run. This behavior is sensible as default because most Python
+projects use Makefiles for running development chores, not for artifact
+building. In cases where that is not desirable use [order-only prerequisite]
+syntax:
+
+```make
+artifacts.tar.gz: | venv
+	...
+```
+
+[order-only prerequisite]: https://www.gnu.org/software/make/manual/html_node/Prerequisite-Types.html
 
 ##### python, ipython
 
