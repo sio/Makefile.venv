@@ -28,8 +28,8 @@ include Makefile.venv
 Makefile.venv:
 	curl \
 		-o Makefile.fetched \
-		-L "https://github.com/sio/Makefile.venv/raw/v2019.11.07/Makefile.venv"
-	echo "74d3b4ddfd18c3dea4a271640b73b73e1640710cd18a109f6623bd888a5fbcf9 *Makefile.fetched" \
+		-L "https://github.com/sio/Makefile.venv/raw/v2019.11.08/Makefile.venv"
+	echo "71133c27bf6979d10ed470e122d5207e35217fef06c37341c175057f60ecf3a7 *Makefile.fetched" \
 		| sha256sum --check - \
 		&& mv Makefile.fetched Makefile.venv
 ```

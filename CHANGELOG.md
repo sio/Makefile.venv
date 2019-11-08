@@ -12,6 +12,16 @@
 -->
 
 
+## v2019.11.08
+
+* Support multiple requirements.txt files via REQUIREMENTS_TXT environment
+  variable
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2019.11.08)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2019.11.08)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2019.11.07...v2019.11.08)
+
+
 ## v2019.11.07
 
 * Virtual environment creation happens only once. Dependencies change does not

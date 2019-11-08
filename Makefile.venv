@@ -1,7 +1,7 @@
 #
 # SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
-# https://github.com/sio/Makefile.venv             v2019.11.07
+# https://github.com/sio/Makefile.venv             v2019.11.08
 #
 #
 # Insert `include Makefile.venv` at the bottom of your Makefile to enable these
