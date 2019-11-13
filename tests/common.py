@@ -23,7 +23,7 @@ class MakefileTestCase(TestCase):
     MAKE = 'make'
     TIMEOUT = 60 # seconds
 
-    def make(self, *args, debug=False, dry_run=False):
+    def make(self, *args, debug=False, dry_run=False, returncode=0):
         '''Execute Makefile.venv with GNU Make in temporary directory'''
         command = [self.MAKE, '-C', self.tmpdir.name, '-f', os.path.abspath(self.MAKEFILE)]
         if debug:
@@ -31,7 +31,10 @@ class MakefileTestCase(TestCase):
         if dry_run:
             command.append('-n')
         command.extend(args)
-        return run(command, stdout=PIPE, stderr=PIPE, timeout=self.TIMEOUT)
+        process = run(command, stdout=PIPE, stderr=PIPE, timeout=self.TIMEOUT)
+        if returncode is not None:
+            self.check_returncode(process, returncode)
+        return process
 
     def check_returncode(self, process, returncode=0):
         '''Check subprocess return code in automated tests'''
@@ -40,6 +43,7 @@ class MakefileTestCase(TestCase):
             returncode,
             msg='\n'.join(
                 part for part in (
+                    '{} exited with code {} (expected {})'.format(self.MAKE, process.returncode, returncode),
                     '\nstdout:',
                     process.stdout.decode(sys.stdout.encoding),
                     'stderr:',
