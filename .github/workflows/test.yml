@@ -7,5 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Install OS packages for Python
+        run: sudo apt install python3-venv
       - name: Run automated release tests
         run:  make -C tests test
