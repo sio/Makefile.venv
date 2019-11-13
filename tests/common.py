@@ -31,7 +31,10 @@ class MakefileTestCase(TestCase):
         if dry_run:
             command.append('-n')
         command.extend(args)
+
         process = run(command, stdout=PIPE, stderr=PIPE, timeout=self.TIMEOUT)
+        process.stdout, process.stderr = (output.decode(sys.stdout.encoding)
+                                          for output in (process.stdout, process.stderr))
         if returncode is not None:
             self.check_returncode(process, returncode)
         return process
@@ -45,9 +48,9 @@ class MakefileTestCase(TestCase):
                 part for part in (
                     '{} exited with code {} (expected {})'.format(self.MAKE, process.returncode, returncode),
                     '\nstdout:',
-                    process.stdout.decode(sys.stdout.encoding),
+                    process.stdout,
                     'stderr:',
-                    process.stderr.decode(sys.stdout.encoding),
+                    process.stderr,
                 )
                 if part.strip()
             )

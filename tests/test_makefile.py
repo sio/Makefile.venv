@@ -4,7 +4,6 @@ Test Makefile.venv invocation
 
 
 import os.path
-import sys
 from tests.common import MakefileTestCase, slow_test
 
 
@@ -13,7 +12,7 @@ class TestInvocation(MakefileTestCase):
     def test_gnu_make(self):
         '''Only GNU Make is supported'''
         make = self.make('--version')
-        self.assertTrue('gnu make' in make.stdout.decode(sys.stdout.encoding).lower())
+        self.assertTrue('gnu make' in make.stdout.lower())
 
     @slow_test
     def test_creating(self):
