@@ -4,6 +4,11 @@
 environment that you can use in your Makefiles. It will allow you to reduce
 venv related routines to almost zero!
 
+[![test status][badge]][tests]
+
+[badge]: https://github.com/sio/Makefile.venv/workflows/Run%20automated%20tests/badge.svg
+[tests]: tests
+
 
 ## Installation
 
@@ -142,13 +147,6 @@ directory*
 
 Python virtual environment directory. *Default: $(WORKDIR)/.venv*
 
-*Makefile.venv* was written for GNU Make and may not work with other make
-implementations.
-
-*Makefile.venv* has been tested both on Linux and on Windows (Msys). Any
-inconsistency encountered when running on Windows should be considered a bug
-and should be reported via [issues].
-
 
 ## Samples
 
@@ -194,6 +192,16 @@ Python 3.5.4 (v3.5.4:3f56838, Aug  8 2017, 02:07:06) [MSC v.1900 32 bit (Intel)]
 Type "help", "copyright", "credits" or "license" for more information.
 >>> _
 ```
+
+
+## Compatibility
+
+*Makefile.venv* was written for GNU Make and may not work with other make
+implementations.
+
+*Makefile.venv* is being continuously tested on Linux, Windows and macOS. Any
+inconsistency encountered when running on Windows should be considered a bug
+and should be reported via [issues].
 
 
 ## Support and contributing
