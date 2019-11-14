@@ -1,5 +1,9 @@
 name: Run automated tests
-on: push
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '.git*'
 
 
 jobs:
