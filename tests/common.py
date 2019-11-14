@@ -5,6 +5,7 @@ Common utilities for testing Makefile.venv
 
 import os
 import sys
+from shutil import copyfile
 from subprocess import run, PIPE
 from tempfile import TemporaryDirectory
 from unittest import TestCase, skipIf
@@ -23,9 +24,11 @@ class MakefileTestCase(TestCase):
     MAKE = 'make'
     TIMEOUT = 60 # seconds
 
-    def make(self, *args, debug=False, dry_run=False, returncode=0):
+    def make(self, *args, makefile=None, debug=False, dry_run=False, returncode=0):
         '''Execute Makefile.venv with GNU Make in temporary directory'''
-        command = [self.MAKE, '-C', self.tmpdir.name, '-f', os.path.abspath(self.MAKEFILE)]
+        if makefile is None:
+            makefile = self.MAKEFILE
+        command = [self.MAKE, '-C', self.tmpdir.name, '-f', os.path.abspath(makefile)]
         if debug:
             command.append('-drR')
         if dry_run:
@@ -55,6 +58,22 @@ class MakefileTestCase(TestCase):
                 if part.strip()
             )
         )
+
+    def copy_data(self, name, makefile=False, data_dir='tests/data'):
+        '''Copy test data to temporary directory. Return full path to resulting file'''
+        src = os.path.join(data_dir, name)
+        dest = os.path.join(self.tmpdir.name, name)
+        if makefile:
+            with open(src) as source:
+                content = source.read()
+            with open(dest, 'w') as output:
+                output.write(content.replace(
+                    '{{ Makefile.venv }}',
+                    os.path.abspath(self.MAKEFILE)
+                ))
+        else:
+            copyfile(src, dest)
+        return dest
 
     def setUp(self):
         self.tmpdir = TemporaryDirectory(prefix='Makefile.venv_test_')
