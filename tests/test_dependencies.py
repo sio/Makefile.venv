@@ -44,7 +44,6 @@ class TestDependencies(MakefileTestCase):
         sleep(1)  # Ensure that timestamps differ significantly
         touch(dependencies)
         third = self.make('hello', makefile=makefile, dry_run=True)
-        self.assertIn('--upgrade pip', third.stdout)
         self.assertTrue(any('pip install %s' % x in third.stdout for x in {'-r', '-e'}))
 
     @slow_test

@@ -1,7 +1,7 @@
 #
 # SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
-# https://github.com/sio/Makefile.venv             v2019.11.08
+# https://github.com/sio/Makefile.venv             v2019.11.22
 #
 #
 # Insert `include Makefile.venv` at the bottom of your Makefile to enable these
@@ -129,9 +129,9 @@ endif
 
 $(VENV):
 	$(PY) -m venv $(VENVDIR)
+	$(VENV)/python -m pip install --upgrade pip
 
 $(VENV)/$(MARKER): $(VENVDEPENDS) | $(VENV)
-	$(VENV)/python -m pip install --upgrade pip
 ifneq ($(_REQUIREMENTS),)
 	$(VENV)/pip install $(foreach path,$(_REQUIREMENTS),-r $(path))
 endif

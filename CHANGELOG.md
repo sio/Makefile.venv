@@ -12,6 +12,17 @@
 -->
 
 
+## v2019.11.22
+
+* Upgrade pip only at initial environment creation. This helps to avoid build
+  failures with old Python versions where pip can not be upgraded to newer
+  releases. [Example](https://circleci.com/gh/sio/bash-complete-partial-path/53)
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2019.11.22)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2019.11.22)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2019.11.08...v2019.11.22)
+
+
 ## v2019.11.08
 
 * Support multiple requirements.txt files via REQUIREMENTS_TXT environment
