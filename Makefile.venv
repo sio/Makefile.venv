@@ -89,11 +89,11 @@ endif
 
 VENV=$(VENVDIR)/bin
 EXE=
-ifndef FORCE_UNIX_PATHS
-ifeq ($(OS),Windows_NT)
+#Detect windows
+PLAT=$(shell $(PY) -c "import __future__, sys; print(sys.platform)" )
+ifeq ($(PLAT),win32)
 VENV=$(VENVDIR)/Scripts
 EXE=.exe
-endif
 endif
 
 
