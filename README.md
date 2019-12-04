@@ -33,8 +33,8 @@ include Makefile.venv
 Makefile.venv:
 	curl \
 		-o Makefile.fetched \
-		-L "https://github.com/sio/Makefile.venv/raw/v2019.11.22/Makefile.venv"
-	echo "048c4a1b9265231db97b4903bb2e835b01e0d84a5b7435d4bb8d5926c99aa7f7 *Makefile.fetched" \
+		-L "https://github.com/sio/Makefile.venv/raw/v2019.12.04/Makefile.venv"
+	echo "8951aeb17406548c6f50c2b7eb1142d16d1939cc40297977ea6a53731470b525 *Makefile.fetched" \
 		| sha256sum --check - \
 		&& mv Makefile.fetched Makefile.venv
 ```
@@ -146,6 +146,11 @@ directory*
 ##### VENVDIR
 
 Python virtual environment directory. *Default: $(WORKDIR)/.venv*
+
+##### FORCE_UNIX_PATHS
+
+If this variable is set, unix-like file paths are assumed and no Windows
+detection takes place. This is useful when running Python provided by Cygwin.
 
 
 ## Samples

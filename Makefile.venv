@@ -1,7 +1,7 @@
 #
 # SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
-# https://github.com/sio/Makefile.venv             v2019.11.22
+# https://github.com/sio/Makefile.venv             v2019.12.04
 #
 #
 # Insert `include Makefile.venv` at the bottom of your Makefile to enable these
@@ -87,12 +87,13 @@ else
 WORKDIR=$(CURDIR)
 endif
 
-ifdef OS  # Windows support
-VENV=$(VENVDIR)/Scripts
-EXE=.exe
-else
 VENV=$(VENVDIR)/bin
 EXE=
+ifndef FORCE_UNIX_PATHS
+ifeq ($(OS),Windows_NT)
+VENV=$(VENVDIR)/Scripts
+EXE=.exe
+endif
 endif
 
 
