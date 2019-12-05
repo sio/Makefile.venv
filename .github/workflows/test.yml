@@ -76,10 +76,12 @@ jobs:
         if: false # TODO: actually run tests
       - name: Save Cygwin installation
         run: >
+          echo "$PATH" &&
           mkdir cache || true &&
           tar
           -cf cache/cygwin.tar cygwin
           --dereference
-          --exclude='cygwin/dev/fd/*'
+          --exclude='cygwin/dev/fd'
           --warning=no-file-removed
+          --ignore-failed-read
         shell: bash
