@@ -50,7 +50,11 @@ jobs:
           key: cygwin-cache-v2  # Increment to rebuild Cygwin environment
       - name: Unpack Cygwin installation
         shell: bash
-        run: tar xJf cache/cygwin.tar.xz
+        run: |
+          for i in $(seq 5)
+          do
+            tar xJvf cache/cygwin.tar.xz
+          done
         if: steps.cygwin.outputs.cache-hit
       - name: Install Cygwin
         run: >
@@ -73,7 +77,6 @@ jobs:
         env:
           PY: /bin/python3
         shell: cygwin\bin\bash.exe --noprofile --norc -eo pipefail {0}
-        if: false
       - name: Save Cygwin installation
         run: |
           mkdir cache || true
