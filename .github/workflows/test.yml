@@ -79,9 +79,9 @@ jobs:
           echo "$PATH" &&
           mkdir cache || true &&
           tar
-          -cf cache/cygwin.tar cygwin
-          --dereference
-          --exclude='cygwin/dev/fd'
-          --warning=no-file-removed
+          --exclude=cygwin/dev/fd/*
           --ignore-failed-read
+          --warning=no-file-removed
+          --dereference
+          -cf cache/cygwin.tar cygwin
         shell: bash
