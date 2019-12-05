@@ -46,14 +46,12 @@ jobs:
         id: cygwin
         uses: actions/cache@v1
         with:
-          path: ${{ env.CYGWIN_ROOT }}
-          key: cygwin-cache-v1  # Increment to rebuild Cygwin environment
-      - name: Repeat cache extraction on symlink failure
-        id: cygwin-repeat
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.CYGWIN_ROOT }}
-          key: cygwin-cache-v1  # Increment to rebuild Cygwin environment
+          path: cache
+          key: cygwin-cache-v2  # Increment to rebuild Cygwin environment
+      - name: Unpack Cygwin installation
+        shell: bash
+        run: tar xJf cache/cygwin.tar.xz
+        if: steps.cygwin.outputs.cache-hit
       - name: Install Cygwin
         run: >
           md %CYGWIN_ROOT% &&
@@ -75,9 +73,9 @@ jobs:
         env:
           PY: /bin/python3
         shell: cygwin\bin\bash.exe --noprofile --norc -eo pipefail {0}
-      - run: |
-          pwd
-          ls -l
-          find cygwin -type f
-        if: failure()
+        if: false
+      - name: Save Cygwin installation
+        run: |
+          mkdir cache || true
+          tar cJf cache/cygwin.tar.xz cygwin
         shell: bash
