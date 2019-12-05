@@ -47,7 +47,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: cache
-          key: cygwin-cache-v4  # Increment to rebuild Cygwin environment
+          key: cygwin-cache-v5  # Increment to rebuild Cygwin environment
       - name: Unpack Cygwin installation
         shell: bash
         run: tar -xf cache/cygwin.tar
@@ -75,7 +75,11 @@ jobs:
         shell: cygwin\bin\bash.exe --noprofile --norc -eo pipefail {0}
         if: false # TODO: actually run tests
       - name: Save Cygwin installation
-        run: |
-          mkdir cache || true
-          tar --dereference --exclude='cygwin/dev/fd/*' -cf cache/cygwin.tar cygwin
+        run: >
+          mkdir cache || true &&
+          tar
+          -cf cache/cygwin.tar cygwin
+          --dereference
+          --exclude='cygwin/dev/fd/*'
+          --warning=no-file-removed
         shell: bash
