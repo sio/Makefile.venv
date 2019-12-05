@@ -65,9 +65,9 @@ jobs:
         shell: cmd
         if: steps.cygwin.outputs.cache-hit != true
       - name: Run automated tests
-        run: /usr/bin/make -C tests test-verbose
+        run: /bin/make -C tests test-verbose
         env:
-          PY: /usr/bin/python3
+          PY: /bin/python3
         shell: $CYGWIN_ROOT/bin/bash.exe --noprofile --norc -eo pipefail {0}
       - run: |
           pwd
