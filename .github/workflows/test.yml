@@ -70,7 +70,10 @@ jobs:
         if: '! steps.cygwin.outputs.cache-hit'
       - name: Run automated tests
         run: cygwin\bin\bash.exe -c "export PATH=/bin; make -C tests test-verbose"
-      - run: find cygwin -type f
+      - name: Failure diagnostics
+        run: |
+         find cygwin -type f
+         env
         if: failure()
       - name: Save Cygwin installation
         run: >
