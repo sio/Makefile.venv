@@ -45,6 +45,7 @@ jobs:
         run: |
           mkdir -p "$CYGWIN_ROOT/packages"
           curl -o "$CYGWIN_ROOT/setup.exe" -sSL "$CYGWIN_SETUP_URL"
+        shell: bash
       - name: Install Cygwin environment
         run: >-
           "$CYGWIN_ROOT/setup.exe"
