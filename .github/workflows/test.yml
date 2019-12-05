@@ -30,3 +30,44 @@ jobs:
 
       - name: Run automated tests
         run:  make -C tests test-verbose
+
+  cygwin:
+    name: windows-cygwin
+    runs-on: windows-latest
+    env:
+      CYGWIN_SETUP_URL: https://cygwin.com/setup-x86_64.exe
+      CYGWIN_MIRROR: http://cygwin.mirrors.pair.com/
+      CYGWIN_ROOT: $GITHUB_WORKSPACE/cygwin/
+      CYGWIN_PACKAGES: make,python3,git,bash
+    steps:
+      - uses: actions/checkout@v1
+      - name: Fetch Cygwin installer
+        run: |
+          mkdir -p "$CYGWIN_ROOT/packages"
+          curl -o "$CYGWIN_ROOT/setup.exe" -sSL "$CYGWIN_SETUP_URL"
+      - name: Install Cygwin environment
+        run: >-
+          "$CYGWIN_ROOT/setup.exe"
+          --quiet-mode
+          --no-desktop
+          --download
+          --local-install
+          --no-verify
+          --site "$CYGWIN_MIRROR"
+          --local-package-dir "$CYGWIN_ROOT/packages"
+          --root "$CYGWIN_ROOT"
+      - name: Install Cygwin packages
+        run: >-
+          "$CYGWIN_ROOT/setup.exe"
+          --quiet-mode
+          --no-desktop
+          --download
+          --local-install
+          --no-verify
+          --site "$CYGWIN_MIRROR"
+          --local-package-dir "$CYGWIN_ROOT/packages"
+          --root "$CYGWIN_ROOT"
+          --packages "$CYGWIN_PACKAGES"
+      - name: Run automated tests
+        run:  make -C tests test-verbose
+        shell: $CYGWIN_ROOT/bin/bash.exe --noprofile --norc -eo pipefail {0}
