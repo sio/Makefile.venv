@@ -81,7 +81,7 @@ jobs:
           tar
           --exclude=cygwin/dev/fd/*
           --ignore-failed-read
-          --warning=no-file-removed
           --dereference
-          -cf cache/cygwin.tar cygwin
+          -cf cache/cygwin.tar cygwin || [[ "$?" == 1 ]] && true
+          # tar uses return code 1 for warnings
         shell: bash
