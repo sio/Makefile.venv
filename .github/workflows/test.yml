@@ -51,10 +51,19 @@ jobs:
       - name: Unpack Cygwin installation
         shell: bash
         run: |
-          for i in $(seq 5)
+          local SUCCESS
+          local MAX_TRIES=5
+          for i in $(seq $MAX_TRIES)
           do
-            tar xJvf cache/cygwin.tar.xz && break || continue
+            echo "Extraction attempt #$i"
+            tar xJf cache/cygwin.tar.xz && SUCCESS=yes || continue
+            [[ $SUCCESS == yes ]] && break
           done
+          if [[ $i == $MAX_TRIES && $SUCCESS != yes ]]
+          then
+            echo "Failed to extract the archive"
+            exit 99
+          fi
           find . -type f
         if: steps.cygwin.outputs.cache-hit
       - name: Install Cygwin
