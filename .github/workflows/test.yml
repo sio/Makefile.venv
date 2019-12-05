@@ -37,7 +37,7 @@ jobs:
     env:
       CYGWIN_SETUP_URL: https://cygwin.com/setup-x86_64.exe
       CYGWIN_MIRROR: http://cygwin.mirrors.pair.com/
-      CYGWIN_ROOT: $GITHUB_WORKSPACE/cygwin/
+      CYGWIN_ROOT: ${{ env.GITHUB_WORKSPACE }}/cygwin/
       CYGWIN_PACKAGES: make,python3,git,bash
     steps:
       - uses: actions/checkout@v1
