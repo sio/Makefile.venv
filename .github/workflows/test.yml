@@ -43,7 +43,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Install Cygwin
-        run: choco install cygwin --params "/InstallDir:%CYGWIN_ROOT%"
+        run: choco install cygwin
+        shell: cmd
+      - name: Debug failures
+        run: type C:\ProgramData\chocolatey\logs\chocolatey.log
         shell: cmd
       - name: Run automated tests
         run:  make -C tests test-verbose
