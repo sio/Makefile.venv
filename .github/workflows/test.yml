@@ -44,12 +44,13 @@ jobs:
       - uses: actions/checkout@v1
       - name: Fetch Cygwin installer
         run: |
-          New-Item "$CYGWIN_ROOT" -ItemType Directory
-          New-Item "$CYGWIN_PACKAGE_CACHE" -ItemType Directory
-          curl -o "$CYGWIN_ROOT/setup.exe" -sSL "$CYGWIN_SETUP_URL"
+          md %CYGWIN_ROOT%
+          md %CYGWIN_PACKAGE_CACHE%
+          curl -o %CYGWIN_ROOT%/setup.exe -sSL %CYGWIN_SETUP_URL%
+        shell: cmd
       - name: Check setup binary
         run: >-
-          "%CYGWIN_ROOT%\setup.exe"
+          %CYGWIN_ROOT%\setup.exe
           --help
         shell: cmd
       - name: Install Cygwin environment
