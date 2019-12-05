@@ -50,6 +50,7 @@ jobs:
         run: >-
           "$CYGWIN_ROOT/setup.exe"
           --quiet-mode
+          --verbose
           --no-desktop
           --download
           --local-install
