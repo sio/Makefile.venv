@@ -35,8 +35,6 @@ jobs:
     name: windows-cygwin
     runs-on: windows-latest
     env:
-      CYGWIN_SETUP_URL: https://cygwin.com/setup-x86_64.exe
-      CYGWIN_MIRROR: http://cygwin.mirrors.pair.com/
       CYGWIN_ROOT: cygwin
       CYGWIN_PACKAGES: make,python3,git,bash
     steps:
@@ -64,6 +62,7 @@ jobs:
           ls -l
           find cygwin -type f
         if: failure()
+        shell: bash
       - name: Run automated tests
         run:  make -C tests test-verbose
         shell: $CYGWIN_ROOT/bin/bash.exe --noprofile --norc -eo pipefail {0}
