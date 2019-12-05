@@ -37,40 +37,34 @@ jobs:
     env:
       CYGWIN_SETUP_URL: https://cygwin.com/setup-x86_64.exe
       CYGWIN_MIRROR: http://cygwin.mirrors.pair.com/
-      CYGWIN_ROOT: cache/cygwin
-      CYGWIN_PACKAGE_CACHE: cache/cygwin-packages
+      CYGWIN_ROOT: cache\cygwin
+      CYGWIN_PACKAGE_CACHE: cache\cygwin-packages
       CYGWIN_PACKAGES: make,python3,git,bash
     steps:
       - uses: actions/checkout@v1
       - name: Fetch Cygwin installer
         run: |
-          mkdir -p "$CYGWIN_ROOT"
-          mkdir -p "$CYGWIN_PACKAGE_CACHE"
+          New-Item "$CYGWIN_ROOT" -ItemType Directory
+          New-Item "$CYGWIN_PACKAGE_CACHE" -ItemType Directory
           curl -o "$CYGWIN_ROOT/setup.exe" -sSL "$CYGWIN_SETUP_URL"
-        shell: bash
       - name: Check setup binary
         run: >-
-          "$CYGWIN_ROOT/setup.exe"
+          "%CYGWIN_ROOT%\setup.exe"
           --help
-        shell: bash
-      - run: |
-          pwd
-          ls -l
-          uname
-        shell: bash
+        shell: cmd
       - name: Install Cygwin environment
         run: >-
-          "$CYGWIN_ROOT/setup.exe"
+          %CYGWIN_ROOT%\setup.exe
           --quiet-mode
           --verbose
           --no-desktop
           --download
           --local-install
           --no-verify
-          --site "$CYGWIN_MIRROR"
-          --local-package-dir "$CYGWIN_PACKAGE_CACHE"
-          --root "$CYGWIN_ROOT"
-        shell: bash
+          --site %CYGWIN_MIRROR%
+          --local-package-dir %CYGWIN_PACKAGE_CACHE%
+          --root %CYGWIN_ROOT%
+        shell: cmd
       - name: Failure diagnostics
         run: |
           find cache -type f
