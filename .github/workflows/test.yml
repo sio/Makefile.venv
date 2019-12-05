@@ -37,13 +37,14 @@ jobs:
     env:
       CYGWIN_SETUP_URL: https://cygwin.com/setup-x86_64.exe
       CYGWIN_MIRROR: http://cygwin.mirrors.pair.com/
-      CYGWIN_ROOT: cygwin
+      CYGWIN_ROOT: cache/cygwin
+      CYGWIN_PACKAGE_CACHE: cache/cygwin-packages
       CYGWIN_PACKAGES: make,python3,git,bash
     steps:
       - uses: actions/checkout@v1
       - name: Fetch Cygwin installer
         run: |
-          mkdir -p "$CYGWIN_ROOT/packages"
+          mkdir -p "$CYGWIN_PACKAGE_CACHE"
           curl -o "$CYGWIN_ROOT/setup.exe" -sSL "$CYGWIN_SETUP_URL"
         shell: bash
       - name: Check setup binary
@@ -61,7 +62,7 @@ jobs:
           --local-install
           --no-verify
           --site "$CYGWIN_MIRROR"
-          --local-package-dir "$CYGWIN_ROOT/packages"
+          --local-package-dir "$CYGWIN_PACKAGE_CACHE"
           --root "$CYGWIN_ROOT"
         shell: bash
       - name: Install Cygwin packages
@@ -73,7 +74,7 @@ jobs:
           --local-install
           --no-verify
           --site "$CYGWIN_MIRROR"
-          --local-package-dir "$CYGWIN_ROOT/packages"
+          --local-package-dir "$CYGWIN_PACKAGE_CACHE"
           --root "$CYGWIN_ROOT"
           --packages "$CYGWIN_PACKAGES"
         shell: bash
