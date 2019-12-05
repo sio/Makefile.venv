@@ -53,10 +53,14 @@ jobs:
           "$CYGWIN_ROOT/setup.exe"
           --help
         shell: bash
+      - run: |
+          pwd
+          ls -l
+          uname
+        shell: bash
       - name: Install Cygwin environment
         run: >-
           "$CYGWIN_ROOT/setup.exe"
-           --%
           --quiet-mode
           --verbose
           --no-desktop
@@ -66,6 +70,7 @@ jobs:
           --site "$CYGWIN_MIRROR"
           --local-package-dir "$CYGWIN_PACKAGE_CACHE"
           --root "$CYGWIN_ROOT"
+        shell: bash
       - name: Install Cygwin packages
         run: >-
           "$CYGWIN_ROOT/setup.exe"
