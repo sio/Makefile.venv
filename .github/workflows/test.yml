@@ -71,6 +71,13 @@ jobs:
           --local-package-dir "$CYGWIN_PACKAGE_CACHE"
           --root "$CYGWIN_ROOT"
         shell: bash
+      - name: Failure diagnostics
+      - run: |
+          find cache -type f
+          find . -type d
+          find . -type f -iname '*.log' -execdir cat {} \;
+        shell: bash
+        if: failure()
       - name: Install Cygwin packages
         run: >-
           "$CYGWIN_ROOT/setup.exe"
