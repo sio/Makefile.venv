@@ -47,10 +47,10 @@ jobs:
         uses: actions/cache@v1
         with:
           path: cache
-          key: cygwin-cache-v3  # Increment to rebuild Cygwin environment
+          key: cygwin-cache-v4  # Increment to rebuild Cygwin environment
       - name: Unpack Cygwin installation
         shell: bash
-        run: tar -xJf cache/cygwin.tar.xz
+        run: tar -xf cache/cygwin.tar
         if: steps.cygwin.outputs.cache-hit
       - name: Install Cygwin
         run: >
@@ -77,5 +77,5 @@ jobs:
       - name: Save Cygwin installation
         run: |
           mkdir cache || true
-          tar --dereference -cJf cache/cygwin.tar.xz cygwin
+          tar --dereference --exclude='cygwin/dev/fd/*' -cf cache/cygwin.tar cygwin
         shell: bash
