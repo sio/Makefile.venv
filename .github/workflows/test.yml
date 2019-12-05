@@ -49,24 +49,21 @@ jobs:
           path: ${{ env.CYGWIN_ROOT }}
           key: cygwin-cache-v1  # Increment to rebuild Cygwin environment
       - name: Install Cygwin
-        run: |
-          md %CYGWIN_ROOT%
-          choco install cygwin --params='"/InstallDir:%CYGWIN_ROOT%"'
+        run: >
+          md %CYGWIN_ROOT% &&
+          choco install cygwin --params='"/InstallDir:%CYGWIN_ROOT%"' &&
+          %CYGWIN_ROOT%\cygwinsetup.exe
+            --quiet-mode
+            --no-desktop
+            --download
+            --local-install
+            --no-verify
+            --site "%CYGWIN_MIRROR%"
+            --local-package-dir "%CYGWIN_ROOT%"
+            --root "%CYGWIN_ROOT%"
+            --packages "%CYGWIN_PACKAGES%"
         shell: cmd
         if: steps.cygwin.outputs.cache-hit != true
-      - name: Install Cygwin packages
-        run: |
-          %CYGWIN_ROOT%\cygwinsetup.exe
-          --quiet-mode
-          --no-desktop
-          --download
-          --local-install
-          --no-verify
-          --site "%CYGWIN_MIRROR%"
-          --local-package-dir "%CYGWIN_ROOT%"
-          --root "%CYGWIN_ROOT%"
-          --packages "%CYGWIN_PACKAGES%"
-        shell: cmd
       - run: |
           pwd
           ls -l
@@ -74,5 +71,5 @@ jobs:
         if: failure()
         shell: bash
       - name: Run automated tests
-        run:  make -C tests test-verbose
+        run: /usr/bin/make -C tests test-verbose
         shell: $CYGWIN_ROOT/bin/bash.exe --noprofile --norc -eo pipefail {0}
