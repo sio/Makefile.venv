@@ -53,8 +53,9 @@ jobs:
         run: |
           for i in $(seq 5)
           do
-            tar xJvf cache/cygwin.tar.xz
+            tar xJvf cache/cygwin.tar.xz && break || continue
           done
+          find . -type f
         if: steps.cygwin.outputs.cache-hit
       - name: Install Cygwin
         run: >
