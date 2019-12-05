@@ -51,8 +51,7 @@ jobs:
       - name: Unpack Cygwin installation
         shell: bash
         run: |
-          local SUCCESS
-          local MAX_TRIES=5
+          MAX_TRIES=5
           for i in $(seq $MAX_TRIES)
           do
             echo "Extraction attempt #$i"
