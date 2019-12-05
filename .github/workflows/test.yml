@@ -69,7 +69,6 @@ jobs:
         env:
           PY: /bin/python3
         shell: cygwin\bin\bash.exe --noprofile --norc -eo pipefail {0}
-        if: false
       - run: |
           pwd
           ls -l
