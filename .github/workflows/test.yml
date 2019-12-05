@@ -67,7 +67,7 @@ jobs:
           --root "%CYGWIN_ROOT%"
           --packages "%CYGWIN_PACKAGES%"
         shell: cmd
-        if: steps.cygwin.outputs.cache-hit != true
+        if: '! steps.cygwin.outputs.cache-hit'
       - name: Run automated tests
         run: /bin/make -C tests test-verbose
         env:
