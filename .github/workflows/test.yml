@@ -44,6 +44,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Fetch Cygwin installer
         run: |
+          mkdir -p "$CYGWIN_ROOT"
           mkdir -p "$CYGWIN_PACKAGE_CACHE"
           curl -o "$CYGWIN_ROOT/setup.exe" -sSL "$CYGWIN_SETUP_URL"
         shell: bash
