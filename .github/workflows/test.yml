@@ -53,16 +53,16 @@ jobs:
           md %CYGWIN_ROOT% &&
           choco install cygwin --params='"/InstallDir:%CYGWIN_ROOT% /NoAdmin"' &&
           echo %CYGWIN_ROOT%\cygwinsetup.exe
-            --no-admin
-            --quiet-mode
-            --no-desktop
-            --download
-            --local-install
-            --no-verify
-            --site "%CYGWIN_MIRROR%"
-            --local-package-dir "%CYGWIN_ROOT%"
-            --root "%CYGWIN_ROOT%"
-            --packages "%CYGWIN_PACKAGES%"
+          --no-admin
+          --quiet-mode
+          --no-desktop
+          --download
+          --local-install
+          --no-verify
+          --site "%CYGWIN_MIRROR%"
+          --local-package-dir "%CYGWIN_ROOT%"
+          --root "%CYGWIN_ROOT%"
+          --packages "%CYGWIN_PACKAGES%"
         shell: cmd
         if: steps.cygwin.outputs.cache-hit != true
       - run: |
