@@ -57,6 +57,7 @@ jobs:
           --site "$CYGWIN_MIRROR"
           --local-package-dir "$CYGWIN_ROOT/packages"
           --root "$CYGWIN_ROOT"
+        shell: bash
       - name: Install Cygwin packages
         run: >-
           "$CYGWIN_ROOT/setup.exe"
@@ -69,6 +70,7 @@ jobs:
           --local-package-dir "$CYGWIN_ROOT/packages"
           --root "$CYGWIN_ROOT"
           --packages "$CYGWIN_PACKAGES"
+        shell: bash
       - name: Run automated tests
         run:  make -C tests test-verbose
         shell: $CYGWIN_ROOT/bin/bash.exe --noprofile --norc -eo pipefail {0}
