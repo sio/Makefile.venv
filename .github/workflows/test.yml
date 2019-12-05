@@ -57,8 +57,10 @@ jobs:
         if: steps.cygwin.outputs.cache-hit != true
       - name: Install Cygwin packages
         run: |
-          %CYGWIN_ROOT%\setup.exe --help
+          %CYGWIN_ROOT%\setup* --help
         shell: cmd
+      - run: find "$GITHUB_WORKSPACE/cygwin" -type f
+        if: failure()
       - name: Run automated tests
         run:  make -C tests test-verbose
         shell: $CYGWIN_ROOT/bin/bash.exe --noprofile --norc -eo pipefail {0}
