@@ -59,7 +59,10 @@ jobs:
         run: |
           %CYGWIN_ROOT%\setup* --help
         shell: cmd
-      - run: find "$GITHUB_WORKSPACE/cygwin" -type f
+      - run: |
+          pwd
+          ls -l
+          find cygwin -type f
         if: failure()
       - name: Run automated tests
         run:  make -C tests test-verbose
