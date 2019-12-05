@@ -51,8 +51,8 @@ jobs:
           key: cygwin-cache-v1  # Increment to rebuild Cygwin environment
       - name: Install Cygwin
         run: |
-          md %GITHUB_WORKSPACE%\%CYGWIN_ROOT%
-          choco install cygwin --params='"/InstallDir:%GITHUB_WORKSPACE%\%CYGWIN_ROOT%"'
+          md %CYGWIN_ROOT%
+          choco install cygwin --params='"/InstallDir:%CYGWIN_ROOT%"'
         shell: cmd
         if: steps.cygwin.outputs.cache-hit != true
       - name: Install Cygwin packages
