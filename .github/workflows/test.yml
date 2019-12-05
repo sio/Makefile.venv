@@ -57,7 +57,7 @@ jobs:
           md %GITHUB_WORKSPACE%\%CYGWIN_ROOT%
           choco install cygwin --params='"/InstallDir:%GITHUB_WORKSPACE%\%CYGWIN_ROOT%"'
         shell: cmd
-        if: not steps.cygwin.cache-hit
+        if: '! steps.cygwin.outputs.cache-hit'
       - name: Install Cygwin packages
         run: |
           %CYGWIN_ROOT%\setup.exe --help
