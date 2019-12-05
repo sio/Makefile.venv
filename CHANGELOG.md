@@ -14,6 +14,17 @@
 -->
 
 
+## v2019.12.05
+
+* Use Python to detect if Windows paths are required. This helps to avoid
+  mistakes when using different combinations of Cygwin/native Windows
+  environments. Thanks to [@jpc4242](https://github.com/jpc4242)
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2019.12.05)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2019.12.05)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2019.12.04...v2019.12.05)
+
+
 ## v2019.12.04
 
 * New configuration variable: FORCE_UNIX_PATHS. If this variable is set,
