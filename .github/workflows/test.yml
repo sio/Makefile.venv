@@ -72,7 +72,7 @@ jobs:
           --root "$CYGWIN_ROOT"
         shell: bash
       - name: Failure diagnostics
-      - run: |
+        run: |
           find cache -type f
           find . -type d
           find . -type f -iname '*.log' -execdir cat {} \;
