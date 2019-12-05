@@ -51,7 +51,8 @@ jobs:
         shell: cmd
         if: failure()
       - name: Install Cygwin packages
-        run: %CYGWIN_ROOT%\setup.exe --help
+        run: |
+          %CYGWIN_ROOT%\setup.exe --help
         shell: cmd
       - name: Run automated tests
         run:  make -C tests test-verbose
