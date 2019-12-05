@@ -76,7 +76,6 @@ jobs:
         if: false # TODO: actually run tests
       - name: Save Cygwin installation
         run: >
-          echo "$PATH" &&
           mkdir cache || true &&
           tar
           --exclude=cygwin/dev/fd/*
