@@ -73,7 +73,7 @@ jobs:
         env:
           PY: /bin/python3
         shell: cygwin\bin\bash.exe --noprofile --norc -eo pipefail {0}
-        if: false
+        if: false # TODO: actually run tests
       - name: Save Cygwin installation
         run: |
           mkdir cache || true
