@@ -42,50 +42,9 @@ jobs:
       CYGWIN_PACKAGES: make,python3,git,bash
     steps:
       - uses: actions/checkout@v1
-      - name: Fetch Cygwin installer
-        run: |
-          md %CYGWIN_ROOT%
-          md %CYGWIN_PACKAGE_CACHE%
-          curl -o %CYGWIN_ROOT%/setup.exe -sSL %CYGWIN_SETUP_URL%
+      - name: Install Cygwin
+        run: choco install cygwin --params "/InstallDir:%CYGWIN_ROOT%"
         shell: cmd
-      - name: Check setup binary
-        run: >-
-          %CYGWIN_ROOT%\setup.exe
-          --help
-        shell: cmd
-      - name: Install Cygwin environment
-        run: >-
-          %CYGWIN_ROOT%\setup.exe
-          --quiet-mode
-          --verbose
-          --no-desktop
-          --download
-          --local-install
-          --no-verify
-          --site %CYGWIN_MIRROR%
-          --local-package-dir %CYGWIN_PACKAGE_CACHE%
-          --root %CYGWIN_ROOT%
-        shell: cmd
-      - name: Failure diagnostics
-        run: |
-          find cache -type f
-          find . -type d
-          find . -type f -iname '*.log' -execdir cat {} \;
-        shell: bash
-        if: failure()
-      - name: Install Cygwin packages
-        run: >-
-          "$CYGWIN_ROOT/setup.exe"
-          --quiet-mode
-          --no-desktop
-          --download
-          --local-install
-          --no-verify
-          --site "$CYGWIN_MIRROR"
-          --local-package-dir "$CYGWIN_PACKAGE_CACHE"
-          --root "$CYGWIN_ROOT"
-          --packages "$CYGWIN_PACKAGES"
-        shell: bash
       - name: Run automated tests
         run:  make -C tests test-verbose
         shell: $CYGWIN_ROOT/bin/bash.exe --noprofile --norc -eo pipefail {0}
