@@ -30,3 +30,58 @@ jobs:
 
       - name: Run automated tests
         run:  make -C tests test-verbose
+
+  cygwin:
+    name: windows-cygwin
+    runs-on: windows-latest
+    env:
+      CYGWIN_ROOT: cygwin
+      CYGWIN_PACKAGES: make,python3,git,bash
+      CYGWIN_MIRROR: http://mirrors.kernel.org/sourceware/cygwin/
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use absolute path for CYGWIN_ROOT
+        run: echo "::set-env name=CYGWIN_ROOT::${env:GITHUB_WORKSPACE}\${env:CYGWIN_ROOT}"
+      - name: Cache Cygwin installation
+        id: cygwin
+        uses: actions/cache@v1
+        with:
+          path: cache
+          key: cygwin-cache-v5  # Increment to rebuild Cygwin environment
+      - name: Unpack Cygwin installation
+        shell: bash
+        run: tar -xf cache/cygwin.tar
+        if: steps.cygwin.outputs.cache-hit
+      - name: Install Cygwin
+        run: >
+          md %CYGWIN_ROOT% &&
+          choco install cygwin --params='"/InstallDir:%CYGWIN_ROOT%"' &&
+          %CYGWIN_ROOT%\cygwinsetup.exe
+          --quiet-mode
+          --no-desktop
+          --download
+          --local-install
+          --no-verify
+          --site "%CYGWIN_MIRROR%"
+          --local-package-dir "%CYGWIN_ROOT%"
+          --root "%CYGWIN_ROOT%"
+          --packages "%CYGWIN_PACKAGES%"
+        shell: cmd
+        if: '! steps.cygwin.outputs.cache-hit'
+      - name: Run automated tests
+        run: cygwin\bin\bash.exe -c "export PATH=/bin; make -C tests test-verbose"
+      - name: Failure diagnostics
+        run: |
+         find cygwin -type f
+         env
+        if: failure()
+      - name: Save Cygwin installation
+        run: >
+          mkdir cache || true &&
+          tar
+          --exclude=cygwin/dev/fd/*
+          --ignore-failed-read
+          --dereference
+          -cf cache/cygwin.tar cygwin || [[ "$?" == 1 ]] && true
+          # tar uses return code 1 for warnings
+        shell: bash
