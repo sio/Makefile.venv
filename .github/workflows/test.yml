@@ -51,7 +51,7 @@ jobs:
       - name: Unpack Cygwin installation
         shell: bash
         run: |
-          MAX_TRIES=5
+          MAX_TRIES=3
           for i in $(seq $MAX_TRIES)
           do
             echo "Extraction attempt #$i"
@@ -60,8 +60,7 @@ jobs:
           done
           if [[ $i == $MAX_TRIES && $SUCCESS != yes ]]
           then
-            echo "Failed to extract the archive"
-            exit 99
+            echo "Ignoring any remaining untar errors"
           fi
           find . -type f
         if: steps.cygwin.outputs.cache-hit
