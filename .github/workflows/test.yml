@@ -48,6 +48,12 @@ jobs:
         with:
           path: ${{ env.CYGWIN_ROOT }}
           key: cygwin-cache-v1  # Increment to rebuild Cygwin environment
+      - name: Repeat cache extraction on symlink failure
+        id: cygwin-repeat
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.CYGWIN_ROOT }}
+          key: cygwin-cache-v1  # Increment to rebuild Cygwin environment
       - name: Install Cygwin
         run: >
           md %CYGWIN_ROOT% &&
