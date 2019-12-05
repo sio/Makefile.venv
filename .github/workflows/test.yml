@@ -68,7 +68,8 @@ jobs:
         run: /bin/make -C tests test-verbose
         env:
           PY: /bin/python3
-        shell: $CYGWIN_ROOT/bin/bash.exe --noprofile --norc -eo pipefail {0}
+        shell: ${{ env.CYGWIN_ROOT }}\bin\bash.exe --noprofile --norc -eo pipefail {0}
+        if: false
       - run: |
           pwd
           ls -l
