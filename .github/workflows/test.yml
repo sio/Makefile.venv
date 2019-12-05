@@ -69,10 +69,9 @@ jobs:
         shell: cmd
         if: '! steps.cygwin.outputs.cache-hit'
       - name: Run automated tests
-        run: /bin/make -C tests test-verbose
+        run: cygwin\bin\bash.exe -c "/bin/make -C tests test-verbose"
         env:
           PY: /bin/python3
-        shell: cygwin\bin\bash.exe --noprofile --norc -eo pipefail {0}
       - run: find cygwin -type f
         if: failure()
       - name: Save Cygwin installation
