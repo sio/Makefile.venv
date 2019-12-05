@@ -38,15 +38,20 @@ jobs:
       CYGWIN_SETUP_URL: https://cygwin.com/setup-x86_64.exe
       CYGWIN_MIRROR: http://cygwin.mirrors.pair.com/
       CYGWIN_ROOT: cache\cygwin
-      CYGWIN_PACKAGE_CACHE: cache\cygwin-packages
       CYGWIN_PACKAGES: make,python3,git,bash
     steps:
       - uses: actions/checkout@v1
       - name: Install Cygwin
-        run: choco install cygwin
+        run: |
+          md %CYGWIN_ROOT%
+          choco install cygwin --params='"/InstallDir:%CYGWIN_ROOT%"'
         shell: cmd
       - name: Debug failures
         run: type C:\ProgramData\chocolatey\logs\chocolatey.log
+        shell: cmd
+        if: failure()
+      - name: Install Cygwin packages
+        run: %CYGWIN_ROOT%\setup.exe --help
         shell: cmd
       - name: Run automated tests
         run:  make -C tests test-verbose
