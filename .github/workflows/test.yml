@@ -41,15 +41,23 @@ jobs:
       CYGWIN_PACKAGES: make,python3,git,bash
     steps:
       - uses: actions/checkout@v1
+      - name: Use absolute path for CYGWIN_ROOT
+        run: echo "::set-env name=CYGWIN_ROOT::${env:GITHUB_WORKSPACE}\${env:CYGWIN_ROOT}"
+      - name: Cache Cygwin installation
+        id: cygwin
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.CYGWIN_ROOT }}
+          key: cygwin-cache-v1-${{ env.CYGWIN_PACKAGES }}
+          restore-keys: |
+            cygwin-cache-v1-${{ env.CYGWIN_PACKAGES }}
+            cygwin-cache-v1-
       - name: Install Cygwin
         run: |
           md %GITHUB_WORKSPACE%\%CYGWIN_ROOT%
           choco install cygwin --params='"/InstallDir:%GITHUB_WORKSPACE%\%CYGWIN_ROOT%"'
         shell: cmd
-      - name: Debug failures
-        run: type C:\ProgramData\chocolatey\logs\chocolatey.log
-        shell: cmd
-        if: failure()
+        if: not steps.cygwin.cache-hit
       - name: Install Cygwin packages
         run: |
           %CYGWIN_ROOT%\setup.exe --help
