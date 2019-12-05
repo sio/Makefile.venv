@@ -37,6 +37,7 @@ jobs:
     env:
       CYGWIN_ROOT: cygwin
       CYGWIN_PACKAGES: make,python3,git,bash
+      CYGWIN_MIRROR: http://mirrors.kernel.org/sourceware/cygwin/
     steps:
       - uses: actions/checkout@v1
       - name: Use absolute path for CYGWIN_ROOT
@@ -55,7 +56,16 @@ jobs:
         if: steps.cygwin.outputs.cache-hit != true
       - name: Install Cygwin packages
         run: |
-          %CYGWIN_ROOT%\setup* --help
+          %CYGWIN_ROOT%\cygwinsetup.exe
+          --quiet-mode
+          --no-desktop
+          --download
+          --local-install
+          --no-verify
+          --site "%CYGWIN_MIRROR%"
+          --local-package-dir "%CYGWIN_ROOT%"
+          --root "%CYGWIN_ROOT%"
+          --packages "%CYGWIN_PACKAGES%"
         shell: cmd
       - run: |
           pwd
