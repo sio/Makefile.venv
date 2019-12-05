@@ -52,7 +52,7 @@ jobs:
         run: >
           md %CYGWIN_ROOT% &&
           choco install cygwin --params='"/InstallDir:%CYGWIN_ROOT% /NoAdmin"' &&
-          echo %CYGWIN_ROOT%\cygwinsetup.exe
+          %CYGWIN_ROOT%\cygwinsetup.exe
           --no-admin
           --quiet-mode
           --no-desktop
