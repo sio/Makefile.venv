@@ -14,6 +14,16 @@
 -->
 
 
+## v2020.02.26
+
+* Update setuptools when creating venv
+* Trigger venv update on setup.cfg changes
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2020.02.26)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2020.02.26)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2019.12.05...v2020.02.26)
+
+
 ## v2019.12.05
 
 * Use Python to detect if Windows paths are required. This helps to avoid
