@@ -132,7 +132,7 @@ endif
 
 $(VENV):
 	$(PY) -m venv $(VENVDIR)
-	$(VENV)/python -m pip install --upgrade pip
+	$(VENV)/python -m pip install --upgrade pip setuptools
 
 $(VENV)/$(MARKER): $(VENVDEPENDS) | $(VENV)
 ifneq ($(_REQUIREMENTS),)
