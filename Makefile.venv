@@ -126,6 +126,9 @@ endif
 ifneq ($(wildcard setup.py),)
 VENVDEPENDS+=setup.py
 endif
+ifneq ($(wildcard setup.cfg),)
+VENVDEPENDS+=setup.cfg
+endif
 
 $(VENV):
 	$(PY) -m venv $(VENVDIR)
