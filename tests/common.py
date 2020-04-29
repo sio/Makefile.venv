@@ -23,6 +23,7 @@ class MakefileTestCase(TestCase):
     MAKEFILE = 'Makefile.venv'
     MAKE = 'make'
     TIMEOUT = 60 # seconds
+    TMPPREFIX = 'Makefile.venv_test_'
 
     def make(self, *args, makefile=None, debug=False, dry_run=False, returncode=0):
         '''Execute Makefile.venv with GNU Make in temporary directory'''
@@ -76,7 +77,7 @@ class MakefileTestCase(TestCase):
         return dest
 
     def setUp(self):
-        self.tmpdir = TemporaryDirectory(prefix='Makefile.venv_test_')
+        self.tmpdir = TemporaryDirectory(prefix=self.TMPPREFIX)
         for variable in ('WORKDIR', 'VENVDIR', 'REQUIREMENTS_TXT'):
             if variable in os.environ:  # Clear environment variables for tests
                 os.environ.pop(variable)
