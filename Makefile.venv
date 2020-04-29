@@ -100,7 +100,7 @@ venv: $(VENV)/$(MARKER)
 
 .PHONY: clean-venv
 clean-venv:
-	[ ! -d $(VENVDIR) ] || rm -rf $(VENVDIR)
+	-$(RM) -r "$(VENVDIR)"
 
 .PHONY: show-venv
 show-venv: venv
