@@ -197,7 +197,11 @@ Type "help", "copyright", "credits" or "license" for more information.
 ## Compatibility
 
 *Makefile.venv* was written for GNU Make and may not work with other make
-implementations.
+implementations. Please be aware that GNU Make [can not correctly handle][spaces]
+whitespace characters in file paths. Such filepaths therefore are
+considered unsupported by *Makefile.venv*
+
+[spaces]: https://stackoverflow.com/questions/9838384/can-gnu-make-handle-filenames-with-spaces
 
 *Makefile.venv* is being continuously tested on Linux, Windows and macOS. Any
 inconsistency encountered when running on Windows should be considered a bug
