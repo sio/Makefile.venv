@@ -72,6 +72,7 @@
 #
 
 PY?=python3
+WORKDIR?=.
 VENVDIR?=$(WORKDIR)/.venv
 REQUIREMENTS_TXT?=requirements.txt  # Multiple paths are supported (space separated)
 MARKER=.initialized-with-Makefile.venv
@@ -80,12 +81,6 @@ MARKER=.initialized-with-Makefile.venv
 #
 # Internal variable resolution
 #
-
-ifdef WORKDIR  # Must be an absolute path
-WORKDIR:=$(abspath $(WORKDIR))
-else
-WORKDIR=$(CURDIR)
-endif
 
 VENV=$(VENVDIR)/bin
 EXE=
