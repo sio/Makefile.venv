@@ -2,6 +2,8 @@ import re
 from hashlib import sha256
 from unittest import TestCase
 
+from .test_release_version import skip_dev
+
 
 def calculate_checksum(filename):
     with open(filename) as f:
@@ -23,6 +25,7 @@ class TestChecksum(TestCase):
             raise ValueError('checksum not found in {}'.format(filename))
         return match.group().lower()
 
+    @skip_dev
     def test_checksum(self):
         '''Check that installation instructions contain valid checksum'''
         recorded = self.read_checksum(self.readme)
