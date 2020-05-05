@@ -14,6 +14,18 @@
 -->
 
 
+## v2020.05.05
+
+* Mark paths with spaces as unsupported
+* Do not convert WORKDIR into absolute path
+* Sanitize path when removing VENVDIR - avoid destructive consequences of
+  paths with spaces
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2020.05.05)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2020.05.05)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2020.02.26...v2020.05.05)
+
+
 ## v2020.02.26
 
 * Update setuptools when creating venv
