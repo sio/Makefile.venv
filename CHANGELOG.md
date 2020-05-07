@@ -14,6 +14,15 @@
 -->
 
 
+## v2020.05.07
+
+* Add `debug-venv` target for troubleshooting
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2020.05.07)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2020.05.07)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2020.05.05...v2020.05.07)
+
+
 ## v2020.05.05
 
 * Mark paths with spaces as unsupported
