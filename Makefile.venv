@@ -1,7 +1,7 @@
 #
 # SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
-# https://github.com/sio/Makefile.venv             v2020.05.05
+# https://github.com/sio/Makefile.venv             v2020.05.07-dev
 #
 #
 # Insert `include Makefile.venv` at the bottom of your Makefile to enable these
@@ -107,6 +107,14 @@ show-venv: venv
 	@$(VENV)/python -c "import sys; print('Python ' + sys.version.replace('\n',''))"
 	@$(VENV)/pip --version
 	@echo venv: $(VENVDIR)
+
+.PHONY: debug-venv
+debug-venv:
+	@$(MAKE) --version
+	$(info PY="$(PY)")
+	$(info REQUIREMENTS_TXT="$(REQUIREMENTS_TXT)")
+	$(info VENVDIR="$(VENVDIR)")
+	$(info WORKDIR="$(WORKDIR)")
 
 
 #
