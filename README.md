@@ -147,6 +147,20 @@ directory*
 
 Python virtual environment directory. *Default: $(WORKDIR)/.venv*
 
+##### PIP_*
+
+Variables named starting with `PIP_` are not processed by *Makefile.venv* in
+any way and are passed to underlying pip calls as is. See [pip
+documentation](https://pip.pypa.io/en/stable/user_guide/#environment-variables)
+for more information.
+
+Use these variables to customize pip invocation, for example to provide custom
+package index url:
+
+```
+PIP_EXTRA_INDEX_URL="https://your.index/url"
+```
+
 
 ## Samples
 
