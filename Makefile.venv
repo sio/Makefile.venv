@@ -113,7 +113,6 @@ debug-venv:
 	@$(MAKE) --version
 	$(info PY="$(PY)")
 	$(info REQUIREMENTS_TXT="$(REQUIREMENTS_TXT)")
-	$(info _REQUIREMENTS="$(_REQUIREMENTS)")
 	$(info VENVDIR="$(VENVDIR)")
 	$(info VENVDEPENDS="$(VENVDEPENDS)")
 	$(info WORKDIR="$(WORKDIR)")
@@ -123,9 +122,8 @@ debug-venv:
 # Dependencies
 #
 
-_REQUIREMENTS=$(strip $(REQUIREMENTS_TXT))
-ifneq ($(_REQUIREMENTS),)
-VENVDEPENDS+=$(_REQUIREMENTS)
+ifneq ($(strip $(REQUIREMENTS_TXT)),)
+VENVDEPENDS+=$(REQUIREMENTS_TXT)
 endif
 
 ifneq ($(wildcard setup.py),)
@@ -140,8 +138,8 @@ $(VENV):
 	$(VENV)/python -m pip install --upgrade pip setuptools
 
 $(VENV)/$(MARKER): $(VENVDEPENDS) | $(VENV)
-ifneq ($(_REQUIREMENTS),)
-	$(VENV)/pip install $(foreach path,$(_REQUIREMENTS),-r $(path))
+ifneq ($(strip $(REQUIREMENTS_TXT)),)
+	$(VENV)/pip install $(foreach path,$(REQUIREMENTS_TXT),-r $(path))
 endif
 ifneq ($(wildcard setup.py),)
 	$(VENV)/pip install -e .
