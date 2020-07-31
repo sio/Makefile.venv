@@ -38,6 +38,8 @@ jobs:
       CYGWIN_ROOT: cygwin
       CYGWIN_PACKAGES: make,python3,git,bash
       CYGWIN_MIRROR: http://mirrors.kernel.org/sourceware/cygwin/
+      LC_ALL: C.UTF-8
+      LANG: C.UTF-8
     steps:
       - uses: actions/checkout@v1
       - name: Use absolute path for CYGWIN_ROOT
