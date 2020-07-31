@@ -74,7 +74,7 @@
 PY?=python3
 WORKDIR?=.
 VENVDIR?=$(WORKDIR)/.venv
-REQUIREMENTS_TXT?=requirements.txt  # Multiple paths are supported (space separated)
+REQUIREMENTS_TXT?=$(wildcard requirements.txt)  # Multiple paths are supported (space separated)
 MARKER=.initialized-with-Makefile.venv
 
 
@@ -113,7 +113,9 @@ debug-venv:
 	@$(MAKE) --version
 	$(info PY="$(PY)")
 	$(info REQUIREMENTS_TXT="$(REQUIREMENTS_TXT)")
+	$(info _REQUIREMENTS="$(_REQUIREMENTS)")
 	$(info VENVDIR="$(VENVDIR)")
+	$(info VENVDEPENDS="$(VENVDEPENDS)")
 	$(info WORKDIR="$(WORKDIR)")
 
 
@@ -121,7 +123,7 @@ debug-venv:
 # Dependencies
 #
 
-_REQUIREMENTS=$(strip $(foreach path, $(REQUIREMENTS_TXT), $(wildcard $(path))))
+_REQUIREMENTS=$(strip $(REQUIREMENTS_TXT))
 ifneq ($(_REQUIREMENTS),)
 VENVDEPENDS+=$(_REQUIREMENTS)
 endif
