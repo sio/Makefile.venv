@@ -27,5 +27,5 @@ class TestPipCompile(MakefileTestCase):
 
         # Second invokation must not need to rebuild venv
         repeat = self.make(makefile=makefile)
-        self.assertIn('pyflakes --help', repeat.stdout.splitlines()[1])
+        self.assertIn('pyflakes --help', '\n'.join(repeat.stdout.splitlines()[:2]))
 
