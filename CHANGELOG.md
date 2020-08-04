@@ -14,6 +14,16 @@
 -->
 
 
+## v2020.08.04
+
+* Allow REQUIREMENTS_TXT to be generated with a Makefile recipe
+* Improve documentation
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2020.08.04)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2020.08.04)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2020.05.07...v2020.08.04)
+
+
 ## v2020.05.07
 
 * Add `debug-venv` target for troubleshooting
