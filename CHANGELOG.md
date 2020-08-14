@@ -14,6 +14,15 @@
 -->
 
 
+## v2020.08.14
+
+* Install 'wheel' package automatically when creating virtual environment
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2020.08.14)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2020.08.14)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2020.08.04...v2020.08.14)
+
+
 ## v2020.08.04
 
 * Allow REQUIREMENTS_TXT to be generated with a Makefile recipe
