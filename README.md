@@ -147,6 +147,10 @@ directory*
 
 Python virtual environment directory. *Default: $(WORKDIR)/.venv*
 
+##### VENV_ARGS
+
+Arguments passed to the virtual environment creation. Defaults to nothing.
+
 ##### PIP_*
 
 Variables named starting with `PIP_` are not processed by *Makefile.venv* in

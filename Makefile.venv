@@ -55,6 +55,9 @@
 #   VENVDIR
 #   	Python virtual environment directory.
 #   	Default: $(WORKDIR)/.venv
+#   VENV_ARGS
+#       Arguments passed to the virtual environment creation.
+#       Defaults to nothing.
 #
 # This Makefile was written for GNU Make and may not work with other make
 # implementations.
@@ -75,6 +78,7 @@ PY?=python3
 WORKDIR?=.
 VENVDIR?=$(WORKDIR)/.venv
 REQUIREMENTS_TXT?=$(wildcard requirements.txt)  # Multiple paths are supported (space separated)
+VENV_ARGS?=
 MARKER=.initialized-with-Makefile.venv
 
 
@@ -134,7 +138,7 @@ VENVDEPENDS+=setup.cfg
 endif
 
 $(VENV):
-	$(PY) -m venv $(VENVDIR)
+	$(PY) -m venv $(VENV_ARGS) $(VENVDIR)
 	$(VENV)/python -m pip install --upgrade pip setuptools wheel
 
 $(VENV)/$(MARKER): $(VENVDEPENDS) | $(VENV)
