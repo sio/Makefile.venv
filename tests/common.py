@@ -22,7 +22,7 @@ class MakefileTestCase(TestCase):
 
     MAKEFILE = 'Makefile.venv'
     MAKE = 'make'
-    TIMEOUT = 60 # seconds
+    TIMEOUT = int(os.getenv('TEST_SUBPROCESS_TIMEOUT', 60)) # seconds
     TMPPREFIX = 'Makefile.venv_test_'
 
     def make(self, *args, makefile=None, debug=False, dry_run=False, returncode=0):
