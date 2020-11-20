@@ -26,12 +26,12 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
 
       - name: Specify Python command
-        run: echo "::set-env name=PY::python"
+        run: echo "PY=python" >> $GITHUB_ENV
+        shell: bash
         if: matrix.os == 'windows-latest'
-        # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/development-tools-for-github-actions#set-an-environment-variable-set-env
 
       - name: Workaround for slow macOS runners
-        run: echo "::set-env name=TEST_SUBPROCESS_TIMEOUT::300"
+        run: echo "TEST_SUBPROCESS_TIMEOUT=300" >> $GITHUB_ENV
         if: matrix.os == 'macos-latest'
 
       - name: Run automated tests
@@ -49,7 +49,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Use absolute path for CYGWIN_ROOT
-        run: echo "::set-env name=CYGWIN_ROOT::${env:GITHUB_WORKSPACE}\${env:CYGWIN_ROOT}"
+        run: echo "CYGWIN_ROOT=$GITHUB_WORKSPACE\\$CYGWIN_ROOT" >> $GITHUB_ENV
+        shell: bash
       - name: Cache Cygwin installation
         id: cygwin
         uses: actions/cache@v1
