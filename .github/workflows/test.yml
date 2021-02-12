@@ -42,7 +42,7 @@ jobs:
     runs-on: windows-latest
     env:
       CYGWIN_ROOT: cygwin
-      CYGWIN_PACKAGES: make,python3,git,bash
+      CYGWIN_PACKAGES: make,python3,git,bash,python-pip-wheel,python-setuptools-wheel,python-wheel-wheel
       CYGWIN_MIRROR: http://mirrors.kernel.org/sourceware/cygwin/
       LC_ALL: C.UTF-8
       LANG: C.UTF-8
