@@ -39,6 +39,14 @@ Makefile.venv:
 		&& mv Makefile.fetched Makefile.venv
 ```
 
+> Notes:
+>
+> * *curl* and/or *sha256sum* may not be available by default depending on what
+>   OS and configuration is used
+> * To install *sha256sum* on macOS use `brew install coreutils`
+> * You can use Perl's *shasum -a 256* instead of *sha256sum*, as described
+>   [here](https://github.com/sio/Makefile.venv/issues/11).
+
 
 ## Usage
 
