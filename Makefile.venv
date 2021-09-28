@@ -1,7 +1,7 @@
 #
 # SEAMLESSLY MANAGE PYTHON VIRTUAL ENVIRONMENT WITH A MAKEFILE
 #
-# https://github.com/sio/Makefile.venv             v2020.08.14
+# https://github.com/sio/Makefile.venv             v2021.09.28-dev
 #
 #
 # Insert `include Makefile.venv` at the bottom of your Makefile to enable these
@@ -133,7 +133,9 @@ ifneq ($(wildcard setup.cfg),)
 VENVDEPENDS+=setup.cfg
 endif
 
-$(VENV):
+%: %-venv-default ;
+
+$(VENV)-venv-default:
 	$(PY) -m venv $(VENVDIR)
 	$(VENV)/python -m pip install --upgrade pip setuptools wheel
 
