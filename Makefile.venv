@@ -133,7 +133,7 @@ ifneq ($(wildcard setup.cfg),)
 VENVDEPENDS+=setup.cfg
 endif
 
-%: %-venv-default ;
+%: | %-venv-default ;
 
 $(VENV)-venv-default:
 	$(PY) -m venv $(VENVDIR)
