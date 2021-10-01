@@ -13,3 +13,4 @@ better yet, a [pull request].
 ## How-tos
 
 - [Integrating pip-compile into Makefile.venv workflow](howto-pip-compile.md)
+- [Using custom Makefile recipe to create virtual environment](howto-custom-venv-recipe.md)
