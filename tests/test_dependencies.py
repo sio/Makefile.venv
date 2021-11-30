@@ -21,6 +21,22 @@ class TestDependencies(MakefileTestCase):
         '''Check that setup.py is being processed correctly'''
         self.common_dependency_checks('setup.py')
 
+    @slow_test
+    def test_setup_cfg(self):
+        '''Check that setup.cfg is being processed correctly'''
+        # Repeat setup.py test
+        makefile = self.common_dependency_checks('setup.py')
+
+        # Creating setup.cfg must trigger venv rebuild
+        setup_cfg = Path(makefile).parent / 'setup.cfg'
+        touch(setup_cfg)
+        make = self.make('hello', makefile=makefile)
+        self.assertIn('/pip install -e', make.stdout)
+
+        # But only one rebuild
+        make = self.make('hello', makefile=makefile, dry_run=True)
+        self.assertNotIn('/pip install -e', make.stdout)
+
     def common_dependency_checks(self, dependency_list):
         '''Generic unit test for setup.py and requirements.txt'''
         dependencies = self.copy_data(dependency_list)
@@ -45,6 +61,7 @@ class TestDependencies(MakefileTestCase):
         touch(dependencies)
         third = self.make('hello', makefile=makefile, dry_run=True)
         self.assertTrue(any('pip install %s' % x in third.stdout for x in {'-r', '-e'}))
+        return makefile
 
     @slow_test
     def test_requirements_txt_multiple(self):
