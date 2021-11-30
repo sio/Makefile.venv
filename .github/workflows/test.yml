@@ -51,16 +51,6 @@ jobs:
       - name: Use absolute path for CYGWIN_ROOT
         run: echo "CYGWIN_ROOT=$GITHUB_WORKSPACE\\$CYGWIN_ROOT" >> $GITHUB_ENV
         shell: bash
-      - name: Cache Cygwin installation
-        id: cygwin
-        uses: actions/cache@v1
-        with:
-          path: cache
-          key: cygwin-cache-v5  # Increment to rebuild Cygwin environment
-      - name: Unpack Cygwin installation
-        shell: bash
-        run: tar -xf cache/cygwin.tar
-        if: steps.cygwin.outputs.cache-hit
       - name: Install Cygwin
         run: >
           md %CYGWIN_ROOT% &&
@@ -76,21 +66,11 @@ jobs:
           --root "%CYGWIN_ROOT%"
           --packages "%CYGWIN_PACKAGES%"
         shell: cmd
-        if: '! steps.cygwin.outputs.cache-hit'
       - name: Run automated tests
         run: cygwin\bin\bash.exe -c "export PATH=/bin; make -C tests test-verbose"
       - name: Failure diagnostics
         run: |
          find cygwin -type f
          env
-        if: failure()
-      - name: Save Cygwin installation
-        run: >
-          mkdir cache || true &&
-          tar
-          --exclude=cygwin/dev/fd/*
-          --ignore-failed-read
-          --dereference
-          -cf cache/cygwin.tar cygwin || [[ "$?" == 1 ]] && true
-          # tar uses return code 1 for warnings
         shell: bash
+        if: failure()
