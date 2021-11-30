@@ -36,7 +36,11 @@ class MakefileTestCase(TestCase):
             command.append('-n')
         command.extend(args)
 
-        process = run(command, stdout=PIPE, stderr=PIPE, timeout=self.TIMEOUT)
+        env = os.environ.copy()
+        env.update(dict(
+            LANG='C',
+        ))
+        process = run(command, stdout=PIPE, stderr=PIPE, timeout=self.TIMEOUT, env=env)
         process.stdout, process.stderr = (output.decode(sys.stdout.encoding)
                                           for output in (process.stdout, process.stderr))
         if returncode is not None:
