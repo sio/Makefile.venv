@@ -75,6 +75,8 @@ PY?=python3
 WORKDIR?=.
 VENVDIR?=$(WORKDIR)/.venv
 REQUIREMENTS_TXT?=$(wildcard requirements.txt)  # Multiple paths are supported (space separated)
+SETUP_PY?=$(wildcard setup.py)                  # Multiple paths are supported (space separated)
+SETUP_CFG?=$(foreach s,$(SETUP_PY),$(wildcard $(patsubst %setup.py,%setup.cfg,$(s))))
 MARKER=.initialized-with-Makefile.venv
 
 
@@ -126,11 +128,11 @@ ifneq ($(strip $(REQUIREMENTS_TXT)),)
 VENVDEPENDS+=$(REQUIREMENTS_TXT)
 endif
 
-ifneq ($(wildcard setup.py),)
-VENVDEPENDS+=setup.py
+ifneq ($(strip $(SETUP_PY)),)
+VENVDEPENDS+=$(SETUP_PY)
 endif
-ifneq ($(wildcard setup.cfg),)
-VENVDEPENDS+=setup.cfg
+ifneq ($(strip $(SETUP_CFG)),)
+VENVDEPENDS+=$(SETUP_CFG)
 endif
 
 $(VENV):
@@ -141,8 +143,8 @@ $(VENV)/$(MARKER): $(VENVDEPENDS) | $(VENV)
 ifneq ($(strip $(REQUIREMENTS_TXT)),)
 	$(VENV)/pip install $(foreach path,$(REQUIREMENTS_TXT),-r $(path))
 endif
-ifneq ($(wildcard setup.py),)
-	$(VENV)/pip install -e .
+ifneq ($(strip $(SETUP_PY)),)
+	$(VENV)/pip install $(foreach path,$(SETUP_PY),-e $(dir $(path)))
 endif
 	touch $(VENV)/$(MARKER)
 
