@@ -64,7 +64,7 @@ class MakefileTestCase(TestCase):
             )
         )
 
-    def copy_data(self, filename=None, content=None, makefile=False, data_dir='tests/data'):
+    def copy_data(self, filename=None, content=None, makefile=False, data_dir='tests/data', dest_dir=None):
         '''Copy test data to temporary directory. Return full path to resulting file'''
         if not any([filename, content, makefile]):
             raise ValueError('At least one of parameters must be provided: filename, content, makefile')
@@ -74,7 +74,13 @@ class MakefileTestCase(TestCase):
                 content = source.read()
         if makefile and not filename:
             filename = 'Makefile'
-        dest = os.path.join(self.tmpdir.name, filename)
+        if dest_dir:
+            dest_dir = os.path.join(self.tmpdir.name, dest_dir)
+            if not os.path.exists(dest_dir):
+                os.mkdir(dest_dir)
+            dest = os.path.join(dest_dir, filename)
+        else:
+            dest = os.path.join(self.tmpdir.name, filename)
         if makefile:
             content = content.replace(
                     '{{ Makefile.venv }}',
