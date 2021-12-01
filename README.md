@@ -7,7 +7,7 @@ venv related routines to almost zero!
 [![test status][badge]][tests]
 
 [badge]: https://github.com/sio/Makefile.venv/workflows/Run%20automated%20tests/badge.svg
-[tests]: tests
+[tests]: https://github.com/sio/Makefile.venv/actions?query=branch%3Amaster+
 
 
 ## Installation
