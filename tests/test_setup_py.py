@@ -77,3 +77,16 @@ class TestSetupPy(MakefileTestCase):
         touch(second_setup_py)
         make = self.make('venv', makefile=makefile, dry_run=True)
         self.assertIn('pip install -e', make.stdout)
+
+    def test_setup_cfg_multiple(self):
+        '''Check that multiple setup.cfg files are picked up correctly'''
+        for dirname in {'one', 'two'}:
+            for filename in {'setup.py', 'setup.cfg'}:
+                self.copy(filename, content='', dest_dir=dirname)
+        makefile = self.copy(makefile=True, content='\n'.join((
+            'SETUP_PY=one/setup.py two/setup.py',
+            'include {{ Makefile.venv }}',
+        )))
+        make = self.make('debug-venv', makefile=makefile)
+        self.assertIn('''SETUP_CFG="one/setup.cfg two/setup.cfg"''', make.stdout.splitlines())
+        self.assertIn('''VENVDEPENDS="one/setup.py two/setup.py one/setup.cfg two/setup.cfg"''', make.stdout.splitlines())
