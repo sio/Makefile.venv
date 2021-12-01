@@ -68,6 +68,8 @@ jobs:
         shell: cmd
       - name: Run automated tests
         run: cygwin\bin\bash.exe -c "export PATH=/bin; make -C tests test-verbose"
+        env:
+          TEST_SUBPROCESS_TIMEOUT: 300
       - name: Failure diagnostics
         run: |
          find cygwin -type f
