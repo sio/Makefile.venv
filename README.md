@@ -146,6 +146,23 @@ Space separated list of paths to requirements.txt files.
 Paths are resolved relative to current working directory.
 *Default: requirements.txt*
 
+Non-existent files are treated as hard dependencies, recipes for creating such
+files must be provided by the main Makefile (sample usage: [pip-compile]).
+Providing empty value (`REQUIREMENTS_TXT=`) turns off processing of
+requirements.txt even when the file exists.
+
+[pip-compile]: docs/howto-pip-compile.md
+
+##### SETUP_PY
+
+Space separated list of paths to setup.py files. Corresponding packages will
+be installed into venv in [editable mode] along with all their dependencies.
+*Default: setup.py*
+
+Non-existent and empty values are treated in the same way as for REQUIREMENTS_TXT.
+
+[editable mode]: https://pip.pypa.io/en/stable/cli/pip_install/#editable-installs
+
 ##### WORKDIR
 
 Parent directory for the virtual environment. *Default: current working
