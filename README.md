@@ -9,6 +9,13 @@ venv related routines to almost zero!
 [badge]: https://github.com/sio/Makefile.venv/workflows/Run%20automated%20tests/badge.svg
 [tests]: https://github.com/sio/Makefile.venv/actions?query=branch%3Amaster+
 
+*Makefile.venv* aims to be an one-stop solution for Python virtual environment
+management, regardless of the format used to define the venv: requirements.txt
+and setup.py are supported out of the box because they have become de-facto
+standards, but if anything else will take their place - Makefile.venv will
+support that too. [Pip-compile], pipenv and poetry are compatible but require
+some configuration.
+
 
 ## Installation
 
@@ -23,7 +30,7 @@ include Makefile.venv
 
 ### Alternative method
 
-Alternatively, you can add installation actions as the Makefile rule:
+Alternatively, you can add installation actions as the Makefile recipe:
 
 > **Note the checksum step!** Do not skip it, it would be as bad as [piping curl
 > to shell](https://0x46.net/thoughts/2019/04/27/piping-curl-to-shell/)!
@@ -53,6 +60,9 @@ Makefile.venv:
 When writing your Makefile use `$(VENV)/python` to refer to the Python
 interpreter within virtual environment and `$(VENV)/executablename` for any
 other executable in venv.
+
+*Makefile.venv* is not meant to be used as a standalone tool, think of it more
+like a library that enables extra functionality.
 
 
 ## Demo screencast
