@@ -18,27 +18,27 @@
 #   python, ipython
 #       Use these to launch interactive Python shell within virtual environment
 #   shell, bash, zsh
-#   	Launch interactive command line shell. "shell" target launches the
-#   	default shell Makefile executes its rules in (usually /bin/sh).
-#   	"bash" and "zsh" can be used to refer to the specific desired shell.
+#       Launch interactive command line shell. "shell" target launches the
+#       default shell Makefile executes its rules in (usually /bin/sh).
+#       "bash" and "zsh" can be used to refer to the specific desired shell.
 #   show-venv
 #       Show versions of Python and pip, and the path to the virtual environment
 #   clean-venv
 #       Remove virtual environment
 #   $(VENV)/executable_name
-#   	Install `executable_name` with pip. Only packages with names matching
-#   	the name of the corresponding executable are supported.
-#   	Use this as a lightweight mechanism for development dependencies
-#   	tracking. E.g. for one-off tools that are not required in every
-#   	developer's environment, therefore are not included into
-#   	requirements.txt or setup.py.
-#   	Note:
-#   		Rules using such target or dependency MUST be defined below
-#   		`include` directive to make use of correct $(VENV) value.
-#   	Example:
-#   		codestyle: $(VENV)/pyflakes
-#   			$(VENV)/pyflakes .
-#   	See `ipython` target below for another example.
+#       Install `executable_name` with pip. Only packages with names matching
+#       the name of the corresponding executable are supported.
+#       Use this as a lightweight mechanism for development dependencies
+#       tracking. E.g. for one-off tools that are not required in every
+#       developer's environment, therefore are not included into
+#       requirements.txt or setup.py.
+#       Note:
+#           Rules using such target or dependency MUST be defined below
+#           `include` directive to make use of correct $(VENV) value.
+#       Example:
+#           codestyle: $(VENV)/pyflakes
+#               $(VENV)/pyflakes .
+#       See `ipython` target below for another example.
 #
 # This Makefile can be configured via following variables:
 #   PY
@@ -53,8 +53,8 @@
 #       Parent directory for the virtual environment.
 #       Default: current working directory.
 #   VENVDIR
-#   	Python virtual environment directory.
-#   	Default: $(WORKDIR)/.venv
+#       Python virtual environment directory.
+#       Default: $(WORKDIR)/.venv
 #
 # This Makefile was written for GNU Make and may not work with other make
 # implementations.
