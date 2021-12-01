@@ -68,7 +68,7 @@ class MakefileTestCase(TestCase):
         '''Copy test data to temporary directory. Return full path to resulting file'''
         if not any([filename, content, makefile]):
             raise ValueError('At least one of parameters must be provided: filename, content, makefile')
-        if not content:
+        if content is None:
             src = os.path.join(data_dir, filename)
             with open(src) as source:
                 content = source.read()
