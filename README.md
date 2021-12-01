@@ -11,7 +11,7 @@ venv related routines to almost zero!
 
 *Makefile.venv* aims to be an one-stop solution for Python virtual environment
 management, regardless of the format used to define the venv: requirements.txt
-and setup.py are supported out of the box because they have become de-facto
+and setup․py are supported out of the box because they have become de-facto
 standards, but if anything else will take their place - Makefile.venv will
 support that too. [Pip-compile], pipenv and poetry are compatible but require
 some configuration.
@@ -165,9 +165,9 @@ requirements.txt even when the file exists.
 
 ##### SETUP_PY
 
-Space separated list of paths to setup.py files. Corresponding packages will
+Space separated list of paths to setup․py files. Corresponding packages will
 be installed into venv in [editable mode] along with all their dependencies.
-*Default: setup.py*
+*Default: setup․py*
 
 Non-existent and empty values are treated in the same way as for REQUIREMENTS_TXT.
 
