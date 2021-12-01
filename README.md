@@ -242,7 +242,7 @@ considered unsupported by *Makefile.venv*
 
 [spaces]: https://stackoverflow.com/questions/9838384/can-gnu-make-handle-filenames-with-spaces
 
-*Makefile.venv* is being continuously tested on Linux, Windows and macOS. Any
+*Makefile.venv* is being [continuously tested][tests] on Linux, Windows and macOS. Any
 inconsistency encountered when running on Windows should be considered a bug
 and should be reported via [issues].
 
