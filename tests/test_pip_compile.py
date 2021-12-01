@@ -14,8 +14,8 @@ class TestPipCompile(MakefileTestCase):
     @slow_test
     def test_issue8(self):
         '''Check that REQUIREMENTS_TXT can be generated with a Makefile recipe'''
-        self.copy_data('requirements.in')
-        makefile = self.copy_data('pip-compile.mk', makefile=True)
+        self.copy('requirements.in')
+        makefile = self.copy('pip-compile.mk', makefile=True)
 
         make = self.make(makefile=makefile)
         for line in [

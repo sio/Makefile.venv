@@ -19,8 +19,8 @@ class TestRequirementsTxt(MakefileTestCase):
             'REQUIREMENTS_TXT=',
             'include {{ Makefile.venv }}',
         ))
-        makefile = self.copy_data(content=sample_makefile, makefile=True)
-        self.copy_data('requirements.txt')
+        makefile = self.copy(content=sample_makefile, makefile=True)
+        self.copy('requirements.txt')
         make = self.make(makefile=makefile, dry_run=True)
         self.assertNotIn('/pip install', make.stdout)
 
@@ -34,8 +34,8 @@ class TestRequirementsTxt(MakefileTestCase):
             'REQUIREMENTS_TXT=nonexistent.txt',
             'include {{ Makefile.venv }}',
         ))
-        makefile = self.copy_data(content=sample_makefile, makefile=True)
-        self.copy_data('requirements.txt')
+        makefile = self.copy(content=sample_makefile, makefile=True)
+        self.copy('requirements.txt')
         make = self.make(makefile=makefile, dry_run=True, returncode=None)
         self.assertEqual(make.returncode, 2)
         self.assertIn('no rule to make target', make.stderr.lower())

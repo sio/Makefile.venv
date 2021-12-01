@@ -39,9 +39,9 @@ class TestDependencies(MakefileTestCase):
 
     def common_dependency_checks(self, dependency_list):
         '''Generic unit test for setup.py and requirements.txt'''
-        dependencies = self.copy_data(dependency_list)
-        hello = self.copy_data('hello.py')
-        makefile = self.copy_data('dependencies.mk', makefile=True)
+        dependencies = self.copy(dependency_list)
+        hello = self.copy('hello.py')
+        makefile = self.copy('dependencies.mk', makefile=True)
 
         # Create virtual environment with specified dependencies
         make = self.make('hello', makefile=makefile)
@@ -68,8 +68,8 @@ class TestDependencies(MakefileTestCase):
         '''Check that multiple requirements.txt files are supported'''
         data = ['requirements.txt', 'requirements-extra.txt', 'hello.py']
         for name in data:
-            self.copy_data(name)
-        makefile = self.copy_data('dependencies.mk', makefile=True)
+            self.copy(name)
+        makefile = self.copy('dependencies.mk', makefile=True)
 
         os.environ['REQUIREMENTS_TXT'] = 'requirements.txt requirements-extra.txt'
         self.make('hello', makefile=makefile)
@@ -84,7 +84,7 @@ class TestDependencies(MakefileTestCase):
     @slow_test
     def test_one_off(self):
         '''Check that one-off requirements are supported'''
-        makefile = self.copy_data('dependencies.mk', makefile=True)
+        makefile = self.copy('dependencies.mk', makefile=True)
         make = self.make('oneoff', makefile=makefile)
 
         pyflakes_words = ['pyflakes', '--version', '--help']

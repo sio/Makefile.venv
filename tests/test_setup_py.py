@@ -13,8 +13,8 @@ class TestSetupPy(MakefileTestCase):
             'SETUP_PY=',
             'include {{ Makefile.venv }}',
         ))
-        makefile = self.copy_data(content=sample_makefile, makefile=True)
-        self.copy_data('setup.py')
+        makefile = self.copy(content=sample_makefile, makefile=True)
+        self.copy('setup.py')
         make = self.make(makefile=makefile, dry_run=True)
         self.assertNotIn('/pip install', make.stdout)
 
@@ -28,8 +28,8 @@ class TestSetupPy(MakefileTestCase):
             'SETUP_PY=nonexistent.py',
             'include {{ Makefile.venv }}',
         ))
-        makefile = self.copy_data(content=sample_makefile, makefile=True)
-        self.copy_data('setup.py')
+        makefile = self.copy(content=sample_makefile, makefile=True)
+        self.copy('setup.py')
         make = self.make(makefile=makefile, dry_run=True, returncode=None)
         self.assertEqual(make.returncode, 2)
         self.assertIn('no rule to make target', make.stderr.lower())
@@ -46,12 +46,12 @@ class TestSetupPy(MakefileTestCase):
         ]
         for dest_dir in ['one', 'two']:
             for filename in files:
-                self.copy_data(filename, dest_dir=dest_dir)
+                self.copy(filename, dest_dir=dest_dir)
         setup_content = '\n'.join((
             'from setuptools import setup',
             'setup(name="hello2", install_requires=["console",])'
         ))
-        second_setup_py = self.copy_data(  # avoid package name collision
+        second_setup_py = self.copy(  # avoid package name collision
             'setup.py',
             content=setup_content,
             dest_dir='two',
@@ -60,7 +60,7 @@ class TestSetupPy(MakefileTestCase):
             'SETUP_PY=one/setup.py two/setup.py',
             'include {{ Makefile.venv }}',
         ))
-        makefile = self.copy_data(content=makefile_content, makefile=True)
+        makefile = self.copy(content=makefile_content, makefile=True)
 
         # First invocation creates venv
         make = self.make('venv', makefile=makefile)

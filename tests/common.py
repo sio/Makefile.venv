@@ -64,7 +64,7 @@ class MakefileTestCase(TestCase):
             )
         )
 
-    def copy_data(self, filename=None, content=None, makefile=False, data_dir='tests/data', dest_dir=None):
+    def copy(self, filename=None, content=None, makefile=False, data_dir='tests/data', dest_dir=None):
         '''Copy test data to temporary directory. Return full path to resulting file'''
         if not any([filename, content, makefile]):
             raise ValueError('At least one of parameters must be provided: filename, content, makefile')

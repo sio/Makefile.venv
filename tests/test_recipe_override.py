@@ -19,7 +19,7 @@ class TestMakefileRecipeOverride(MakefileTestCase):
     @slow_test
     def test_recipe_override(self):
         '''Check that default recipe for $(VENV) may be overwritten by user'''
-        makefile = self.copy_data('recipe-override.mk', makefile=True)
+        makefile = self.copy('recipe-override.mk', makefile=True)
 
         first = self.make('freeze', makefile=makefile)
         self.assertIn('dummy-test==0.1.3', first.stdout.splitlines())
