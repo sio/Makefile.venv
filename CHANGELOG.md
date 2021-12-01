@@ -14,6 +14,19 @@
 -->
 
 
+## v2021.12.01
+
+* Move setup․py path to variable (SETUP_PY): now multiple paths are supported
+  and setup․py processing may be skipped by providing empty value (issue [#14])
+* Improve documentation and extend test suite
+
+[#14]: https://github.com/sio/Makefile.venv/issues/14
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2021.12.01)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2021.12.01)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2020.08.14...v2021.12.01)
+
+
 ## v2020.08.14
 
 * Install 'wheel' package automatically when creating virtual environment
