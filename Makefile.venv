@@ -115,6 +115,8 @@ debug-venv:
 	@$(MAKE) --version
 	$(info PY="$(PY)")
 	$(info REQUIREMENTS_TXT="$(REQUIREMENTS_TXT)")
+	$(info SETUP_PY="$(SETUP_PY)")
+	$(info SETUP_CFG="$(SETUP_CFG)")
 	$(info VENVDIR="$(VENVDIR)")
 	$(info VENVDEPENDS="$(VENVDEPENDS)")
 	$(info WORKDIR="$(WORKDIR)")
