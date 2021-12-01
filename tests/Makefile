@@ -1,6 +1,6 @@
 PY?=python3
 REPODIR:=$(dir $(firstword $(MAKEFILE_LIST)))..
-ARGS=
+ARGS?=
 
 .PHONY: test
 test: deps
