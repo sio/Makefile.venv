@@ -165,7 +165,10 @@ show-venv: venv
 
 .PHONY: debug-venv
 debug-venv:
+	@echo "PATH (Shell)=$$PATH"
 	@$(MAKE) --version
+	$(info PATH (GNU Make)="$(PATH)")
+	$(info SHELL="$(SHELL)")
 	$(info PY="$(PY)")
 	$(info REQUIREMENTS_TXT="$(REQUIREMENTS_TXT)")
 	$(info SETUP_PY="$(SETUP_PY)")

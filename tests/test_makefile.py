@@ -17,7 +17,7 @@ class TestInvocation(MakefileTestCase):
     @slow_test
     def test_creating(self):
         '''Create empty virtual environment'''
-        make = self.make('venv')
+        make = self.make('debug-venv', 'venv')
         self.assertTrue(os.path.isdir(os.path.join(self.tmpdir.name, '.venv')))
 
         version = self.make('show-venv')
