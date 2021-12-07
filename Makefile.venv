@@ -71,13 +71,66 @@
 # Configuration variables
 #
 
-PY?=python3
 WORKDIR?=.
 VENVDIR?=$(WORKDIR)/.venv
 REQUIREMENTS_TXT?=$(wildcard requirements.txt)  # Multiple paths are supported (space separated)
 SETUP_PY?=$(wildcard setup.py)                  # Multiple paths are supported (space separated)
 SETUP_CFG?=$(foreach s,$(SETUP_PY),$(wildcard $(patsubst %setup.py,%setup.cfg,$(s))))
 MARKER=.initialized-with-Makefile.venv
+
+
+#
+# Python interpreter detection
+#
+
+_PY_AUTODETECT_MSG=Detected Python interpreter: $(PY). Use PY environment variable to override
+
+ifndef PY
+_PY_OPTION:=python3
+ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" 2>/dev/null))
+PY=$(_PY_OPTION)
+endif
+endif
+
+ifndef PY
+_PY_OPTION:=$(VENVDIR)/bin/python
+ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" 2>/dev/null))
+PY=$(_PY_OPTION)
+$(info $(_PY_AUTODETECT_MSG))
+endif
+endif
+
+ifndef PY
+_PY_OPTION:=$(VENVDIR)/Scripts/python
+ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" 2>/dev/null))
+PY=$(_PY_OPTION)
+$(info $(_PY_AUTODETECT_MSG))
+endif
+endif
+
+ifndef PY
+_PY_OPTION:=py -3
+ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" 2>/dev/null))
+PY=$(_PY_OPTION)
+$(info $(_PY_AUTODETECT_MSG))
+endif
+endif
+
+ifndef PY
+_PY_OPTION:=python
+ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" 2>/dev/null))
+PY=$(_PY_OPTION)
+$(info $(_PY_AUTODETECT_MSG))
+endif
+endif
+
+ifndef PY
+define _PY_AUTODETECT_ERR
+Could not detect Python interpreter automatically.
+Please specify path to interpreter via PY environment variable.
+endef
+$(error $(_PY_AUTODETECT_ERR))
+endif
 
 
 #
