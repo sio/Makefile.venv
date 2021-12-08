@@ -25,6 +25,27 @@ class MakefileTestCase(TestCase):
     TIMEOUT = int(os.getenv('TEST_SUBPROCESS_TIMEOUT', 60)) # seconds
     TMPPREFIX = 'Makefile.venv_test_'
 
+    def __init__(self, *a, **ka):
+        self.env = os.environ.copy()
+        self.env.update(dict(
+            LANG='C',
+        ))
+        for variable in (
+                # PY is intentionally passed through because test runner may
+                # be using non-standard interpreter command/path
+                'REQUIREMENTS_TXT',
+                'SETUP_CFG',
+                'SETUP_PY',
+                'VENV',
+                'VENVDEPENDS',
+                'VENVDIR',
+                'WORKDIR',
+        ):
+            if variable in self.env:  # Clear environment variables for tests
+                self.env.pop(variable)
+        return super().__init__(*a, **ka)
+
+
     def make(self, *args, makefile=None, debug=False, dry_run=False, returncode=0):
         '''Execute Makefile.venv with GNU Make in temporary directory'''
         if makefile is None:
@@ -36,11 +57,7 @@ class MakefileTestCase(TestCase):
             command.append('-n')
         command.extend(args)
 
-        env = os.environ.copy()
-        env.update(dict(
-            LANG='C',
-        ))
-        process = run(command, stdout=PIPE, stderr=PIPE, timeout=self.TIMEOUT, env=env)
+        process = run(command, stdout=PIPE, stderr=PIPE, timeout=self.TIMEOUT)
         process.stdout, process.stderr = (output.decode(sys.stdout.encoding)
                                           for output in (process.stdout, process.stderr))
         if returncode is not None:
@@ -92,10 +109,11 @@ class MakefileTestCase(TestCase):
 
     def setUp(self):
         self.tmpdir = TemporaryDirectory(prefix=self.TMPPREFIX)
-        for variable in ('WORKDIR', 'VENVDIR', 'REQUIREMENTS_TXT'):
-            if variable in os.environ:  # Clear environment variables for tests
-                os.environ.pop(variable)
+        os.environ.clear()
+        os.environ.update(self.env)
 
     def tearDown(self):
         self.tmpdir.cleanup()
         del self.tmpdir
+        os.environ.clear()
+        os.environ.update(self.env)
