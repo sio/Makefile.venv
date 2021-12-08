@@ -41,6 +41,8 @@ class TestPyAutoDetect(MakefileTestCase):
         '''Save Python interpreter entry point to provided relative path'''
         if executable is None:
             executable = sys.executable
+        if sys.platform == 'win32':
+            relative_path += '.cmd'
         dest = Path(self.tmpdir.name) / relative_path
         dest.parent.mkdir(parents=True, exist_ok=True)
         with dest.open('w') as out:
