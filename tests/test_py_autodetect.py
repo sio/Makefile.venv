@@ -20,6 +20,7 @@ class TestPyAutoDetect(MakefileTestCase):
         "{executable}" "$@"
         '''
     WINDOWS_WRAPPER = '''\
+        @echo off
         if "%1"=="-3" shift
         {executable} %*
         '''
