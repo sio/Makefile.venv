@@ -8,7 +8,7 @@ test: deps
 
 .PHONY: deps
 deps:
-	@pwd
+	@-pwd
 	@$(PY) -c "import sys; print('Python ' + sys.version.replace('\n',''))"
 	@$(PY) -c "import platform; print(platform.platform())"
 	@$(MAKE) --version
