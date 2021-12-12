@@ -16,8 +16,8 @@ class TestPyAutoDetect(MakefileTestCase):
 
     UNIX_WRAPPER = '''\
         #!/bin/sh
-        [ "$1" -eq "-3" ] && shift
-        {executable} "$@"
+        [ "$1" = "-3" ] && shift
+        "{executable}" "$@"
         '''
     WINDOWS_WRAPPER = '''\
         if "%1"=="-3" shift
