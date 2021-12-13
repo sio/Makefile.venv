@@ -57,9 +57,7 @@ class MakefileTestCase(TestCase):
             command.append('-n')
         command.extend(args)
 
-        process = run(command, stdout=PIPE, stderr=PIPE, timeout=self.TIMEOUT)
-        process.stdout, process.stderr = (output.decode(sys.stdout.encoding)
-                                          for output in (process.stdout, process.stderr))
+        process = run(command, stdout=PIPE, stderr=PIPE, timeout=self.TIMEOUT, text=True)
         if returncode is not None:
             self.check_returncode(process, returncode)
         return process
