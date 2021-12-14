@@ -63,7 +63,7 @@ class TestPyAutoDetect(MakefileTestCase):
     def test_autodetect_venv(self):
         '''Check that VENV interpreter is used if exists'''
         create = self.make('venv')
-        os.environ['PATH'] = ''
+        os.environ['PATH'] = 'nonexistent'
         make = self.make('debug-venv')
         self.assertIn('PY="./.venv/', make.stdout)
 
