@@ -85,6 +85,5 @@ class TestPyAutoDetect(MakefileTestCase):
     def test_autodetect_failure(self):
         '''Check that autodetect failure is raised to the top'''
         os.environ['PATH'] = 'bin'
-        make = self.make('debug-venv', returncode=None)
-        self.assertEqual(make.returncode, 2)
+        make = self.make('debug-venv', returncode=2)
         self.assertIn('Could not detect Python interpreter', make.stderr)
