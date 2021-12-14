@@ -36,7 +36,7 @@ class TestPyAutoDetect(MakefileTestCase):
     def setUp(self):
         '''Tests in this module require PY to be unset'''
         super().setUp()
-        os.environ.pop('PY', None)
+        self.PY = os.environ.pop('PY', None)
 
     def save_script(self, relative_path: str, executable=None):
         '''Save Python interpreter entry point to provided relative path'''
@@ -62,7 +62,11 @@ class TestPyAutoDetect(MakefileTestCase):
     @slow_test
     def test_autodetect_venv(self):
         '''Check that VENV interpreter is used if exists'''
+        if self.PY:  # restore PY to be able to create venv
+            os.environ['PY'] = self.PY
         create = self.make('venv')
+        os.environ.pop('PY', None)
+
         os.environ['PATH'] = 'nonexistent'
         make = self.make('debug-venv')
         self.assertIn('PY="./.venv/', make.stdout)
