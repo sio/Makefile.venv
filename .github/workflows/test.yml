@@ -25,6 +25,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get -y install python3-venv
         if: matrix.os == 'ubuntu-latest'
 
+      - name: Remove py.exe on Windows
+        run: del /f %WINDIR%\py.exe
+        shell: cmd
+        if: matrix.os == 'windows-latest'
+
       - name: Specify Python command
         run: echo "PY=python" >> $GITHUB_ENV
         shell: bash
