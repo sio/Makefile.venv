@@ -85,16 +85,22 @@ MARKER=.initialized-with-Makefile.venv
 
 _PY_AUTODETECT_MSG=Detected Python interpreter: $(PY). Use PY environment variable to override
 
+ifneq (,$(wildcard /dev/null))
+NULL_STDERR=2>/dev/null
+else
+NULL_STDERR=2>NUL
+endif
+
 ifndef PY
 _PY_OPTION:=python3
-ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')"))
+ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" $(NULL_STDERR)))
 PY=$(_PY_OPTION)
 endif
 endif
 
 ifndef PY
 _PY_OPTION:=$(VENVDIR)/bin/python
-ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')"))
+ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" $(NULL_STDERR)))
 PY=$(_PY_OPTION)
 $(info $(_PY_AUTODETECT_MSG))
 endif
@@ -102,7 +108,7 @@ endif
 
 ifndef PY
 _PY_OPTION:=$(VENVDIR)/Scripts/python
-ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')"))
+ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" $(NULL_STDERR)))
 PY=$(_PY_OPTION)
 $(info $(_PY_AUTODETECT_MSG))
 endif
@@ -110,7 +116,7 @@ endif
 
 ifndef PY
 _PY_OPTION:=py -3
-ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')"))
+ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" $(NULL_STDERR)))
 PY=$(_PY_OPTION)
 $(info $(_PY_AUTODETECT_MSG))
 endif
@@ -118,7 +124,7 @@ endif
 
 ifndef PY
 _PY_OPTION:=python
-ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')"))
+ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" $(NULL_STDERR)))
 PY=$(_PY_OPTION)
 $(info $(_PY_AUTODETECT_MSG))
 endif
