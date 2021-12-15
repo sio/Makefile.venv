@@ -151,6 +151,18 @@ VENV=$(VENVDIR)/Scripts
 EXE=.exe
 endif
 
+touch=touch $(1)
+ifeq (,$(shell command -v touch $(NULL_STDERR)))
+# https://ss64.com/nt/touch.html
+touch=type nul >> $(subst /,\,$(1)) && copy /y /b $(subst /,\,$(1))+,, $(subst /,\,$(1))
+endif
+
+ifeq (,$(shell command -v $(firstword $(RM)) $(NULL_STDERR)))
+RMDIR=rd /s /q
+else
+RMDIR=$(RM) -r
+endif
+
 
 #
 # Virtual environment
@@ -161,7 +173,7 @@ venv: $(VENV)/$(MARKER)
 
 .PHONY: clean-venv
 clean-venv:
-	-$(RM) -r "$(VENVDIR)"
+	-$(RMDIR) "$(VENVDIR)"
 
 .PHONY: show-venv
 show-venv: venv
@@ -210,7 +222,7 @@ endif
 ifneq ($(strip $(SETUP_PY)),)
 	$(VENV)/pip install $(foreach path,$(SETUP_PY),-e $(dir $(path)))
 endif
-	touch $(VENV)/$(MARKER)
+	$(call touch,$(VENV)/$(MARKER))
 
 
 #
@@ -246,4 +258,4 @@ endif
 
 $(VENV)/%$(EXE): $(VENV)/$(MARKER)
 	$(VENV)/pip install --upgrade $*
-	touch $@
+	$(call touch,$@)

@@ -23,8 +23,8 @@ include {{ Makefile.venv }}
 # before Makefile.venv finishes working on it, but after venv is created.
 # There already exists a target you can add as dependency for this case:
 $(PIP_COMPILE): | $(VENV)
-	$(VENV)/pip install pip-tools  # or whatever method you prefer
-	touch $@
+	$(VENV)/pip install pip-tools
+	$(call touch,$@)
 
 
 # Your requirements file directly depends upon *.in file and also requires
