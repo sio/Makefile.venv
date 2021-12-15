@@ -107,7 +107,7 @@ endif
 endif
 
 ifndef PY
-_PY_OPTION:=$(VENVDIR)/Scripts/python
+_PY_OPTION:=$(subst /,\,$(VENVDIR)/Scripts/python)
 ifeq (ok,$(shell $(_PY_OPTION) -c "print('ok')" $(NULL_STDERR)))
 PY=$(_PY_OPTION)
 $(info $(_PY_AUTODETECT_MSG))

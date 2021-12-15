@@ -81,7 +81,12 @@ class TestPyAutoDetect(MakefileTestCase):
 
         os.environ['PATH'] = 'nonexistent'
         make = self.make('debug-venv')
-        self.assertIn('PY="./.venv/', make.stdout)
+        for line in make.stdout.splitlines():
+            if line.startswith('PY='):
+                self.assertIn('.venv', line)
+                break
+        else:
+            self.assertTrue(False, 'Failed to parse stdout:\n%s' % make.stdout)
 
     def test_autodetect_py_3(self):
         '''Check that 'py -3' is used when appropriate'''
