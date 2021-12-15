@@ -8,6 +8,15 @@ import sys
 from pathlib import Path
 from tests.common import MakefileTestCase, slow_test
 from textwrap import dedent
+from unittest import skipIf
+
+
+skip_py_launcher = skipIf(
+    (os.getenv('WINDIR', '') / Path('py.exe')).exists(),
+    r'C:\Windows\py.exe exists and will interfere with this test'
+    # See GNU Make source code for more information (src/w32/subproc/sub_proc.c):
+    # https://github.com/mirror/make/blob/e62f4cf9a2eaf71c0d0102c28280e52e3c169b99/src/w32/subproc/sub_proc.c#L499-L510
+)
 
 
 class TestPyAutoDetect(MakefileTestCase):
@@ -79,6 +88,7 @@ class TestPyAutoDetect(MakefileTestCase):
         make = self.make('debug-venv')
         self.assertIn('PY="py -3"', make.stdout)
 
+    @skip_py_launcher
     def test_autodetect_worst_path(self):
         '''Check that 'python' is used if nothing else is there'''
         self.save_script('bin/python')
@@ -86,6 +96,7 @@ class TestPyAutoDetect(MakefileTestCase):
         make = self.make('debug-venv')
         self.assertIn('PY="python"', make.stdout)
 
+    @skip_py_launcher
     def test_autodetect_failure(self):
         '''Check that autodetect failure is raised to the top'''
         os.environ['PATH'] = 'bin'
