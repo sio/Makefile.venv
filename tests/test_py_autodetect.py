@@ -31,7 +31,10 @@ class TestPyAutoDetect(MakefileTestCase):
     WINDOWS_WRAPPER = '''\
         @echo off
         if "%1"=="-3" shift
-        {executable} %*
+        REM Unfortunately shift does not affect the value of %*
+        REM so we are stuck with unclean %1..%9
+        REM which is more than enough for our usecase
+        {executable} %1 %2 %3 %4 %5 %6 %7 %8 %9
         '''
 
     def __init__(self, *a, **ka):
