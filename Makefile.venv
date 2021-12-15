@@ -85,7 +85,7 @@ MARKER=.initialized-with-Makefile.venv
 
 _PY_AUTODETECT_MSG=Detected Python interpreter: $(PY). Use PY environment variable to override
 
-ifneq (,$(wildcard /dev/null))
+ifeq (ok,$(shell test -e /dev/null 2>&1 && echo ok))
 NULL_STDERR=2>/dev/null
 else
 NULL_STDERR=2>NUL
