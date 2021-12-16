@@ -14,6 +14,21 @@
 -->
 
 
+## v2021.12.16
+
+* Added support for `py` entrypoint on Windows (thanks to [@gschwaer], issue [#15])
+* Improved cross-platform support: now Windows without a POSIX shell should
+  work too (wrappers for `cmd.exe` missing capabilities were added)
+* Minor improvements to debug messages and test suite common tools
+
+[@gschwaer]: https://github.com/gschwaer
+[#15]: https://github.com/sio/Makefile.venv/issues/15
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2021.12.16)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2021.12.16)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2021.12.01...v2021.12.16)
+
+
 ## v2021.12.01
 
 * Move setup․py path to variable (SETUP_PY): now multiple paths are supported
