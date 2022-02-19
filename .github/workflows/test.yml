@@ -30,8 +30,11 @@ jobs:
         shell: cmd
         if: matrix.os == 'windows-latest'
 
-      - name: Specify Python command
-        run: echo "PY=python" >> $GITHUB_ENV
+      - name: Configure Windows environment variables
+        run: |
+          echo "PY=python" >> $GITHUB_ENV
+          echo "TEMP=C:\tmp" >> $GITHUB_ENV  # remove when pip>22.0.3 is released
+          mkdir -p "C:\tmp"                  # see https://github.com/sio/Makefile.venv/issues/17
         shell: bash
         if: matrix.os == 'windows-latest'
 
