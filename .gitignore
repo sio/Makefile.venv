@@ -3,3 +3,12 @@
 
 # Python tests
 *.pyc
+
+# Packaging
+*.egg-info
+.venv/
+.tox/
+/pypi/src/Makefile_venv/LICENSE
+/pypi/src/Makefile_venv/Makefile.venv
+/pypi/src/Makefile_venv/README.md
+/pypi/dist/
