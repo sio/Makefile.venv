@@ -54,6 +54,25 @@ Makefile.venv:
 > * You can use Perl's *shasum -a 256* instead of *sha256sum*, as described
 >   [here](https://github.com/sio/Makefile.venv/issues/11).
 
+### Another alternative method
+
+If you want to use *Makefile.venv* in multiple projects and to be able to
+conveniently manage *Makefile.venv* version from one place you might find this
+[pip package] useful:
+
+- Install globally: `pip install Makefile.venv` or
+- Install for current user: `pip install --user Makefile.venv`
+
+This package will install *Makefile.venv* into your `site-packages/` and will
+add a command-line entrypoint which prints the full path to *Makefile.venv*.
+Include it it in your makefiles like this:
+
+```make
+include $(shell Makefile.venv)
+```
+
+[pip package]: https://pypi.org/project/Makefile.venv/
+
 
 ## Usage
 
