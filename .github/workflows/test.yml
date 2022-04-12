@@ -42,8 +42,11 @@ jobs:
         run: echo "TEST_SUBPROCESS_TIMEOUT=300" >> $GITHUB_ENV
         if: matrix.os == 'macos-latest'
 
-      - name: Run automated tests
+      - name: Run functional tests
         run:  make -C tests test-verbose
+
+      - name: Run packaging tests
+        run:  make -C pypi test
 
   cygwin:
     name: windows-cygwin
