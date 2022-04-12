@@ -1,4 +1,8 @@
 PACKAGE_ROOT=src/Makefile_venv
+PACKAGE_DATA=\
+	$(PACKAGE_ROOT)/LICENSE \
+	$(PACKAGE_ROOT)/Makefile.venv \
+	$(PACKAGE_ROOT)/README.md
 
 
 include ../Makefile.venv
@@ -9,9 +13,7 @@ package build: dist
 
 
 dist: setup.cfg pyproject.toml
-dist: $(PACKAGE_ROOT)/LICENSE
-dist: $(PACKAGE_ROOT)/Makefile.venv
-dist: $(PACKAGE_ROOT)/README.md
+dist: $(PACKAGE_DATA)
 dist: | $(VENV)/build
 	-$(RM) -rv dist
 	$(VENV)/python -m build
@@ -28,6 +30,7 @@ upload: dist | $(VENV)/twine
 
 
 .PHONY: test
+test: $(PACKAGE_DATA)
 test: | $(VENV)/tox
 	$(VENV)/tox $(TOX_ARGS)
 
