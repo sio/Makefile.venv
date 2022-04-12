@@ -12,7 +12,7 @@ include ../Makefile.venv
 package build: dist
 
 
-dist: setup.cfg pyproject.toml
+dist: setup.cfg pyproject.toml Makefile
 dist: $(PACKAGE_DATA)
 dist: | $(VENV)/build
 	-$(RM) -rv dist
