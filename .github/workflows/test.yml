@@ -38,12 +38,10 @@ jobs:
         shell: bash
         if: matrix.os == 'windows-latest'
 
-      - name: Workaround for slow macOS runners
-        run: echo "TEST_SUBPROCESS_TIMEOUT=300" >> $GITHUB_ENV
-        if: matrix.os == 'macos-latest'
-
       - name: Run functional tests
         run:  make -C tests test-verbose
+        env:
+          TEST_SUBPROCESS_TIMEOUT: 300
 
       - name: Run packaging tests
         run:  make -C pypi test
