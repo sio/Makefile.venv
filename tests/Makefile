@@ -12,6 +12,7 @@ deps:
 	@$(PY) -c "import sys; print('Python ' + sys.version.replace('\n',''))"
 	@$(PY) -c "import platform; print(platform.platform())"
 	@$(MAKE) --version
+	@-git --version
 	@echo SHELL=$(SHELL)
 
 test-fast: export SKIP_SLOW_TESTS=1
