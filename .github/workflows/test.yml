@@ -75,6 +75,8 @@ jobs:
           --root "%CYGWIN_ROOT%"
           --packages "%CYGWIN_PACKAGES%"
         shell: cmd
+      - name: Change ownership of current directory (https://stackoverflow.com/questions/7184941)
+        run: cygwin\bin\bash.exe -c "/bin/chown $(id -u):$(id -g) ."
       - name: Run automated tests
         run: cygwin\bin\bash.exe -c "export PATH=/bin; make -C tests test-verbose"
         env:
