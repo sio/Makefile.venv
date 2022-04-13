@@ -14,6 +14,16 @@
 -->
 
 
+## v2022.04.13
+
+* Makefile.venv is now installable from [PyPI](https://pypi.org/project/Makefile.venv/)
+* No changes to Makefile.venv itself
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2022.04.13)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2022.04.13)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2021.12.16...v2022.04.13)
+
+
 ## v2021.12.16
 
 * Added support for `py` entrypoint on Windows (thanks to [@gschwaer], issue [#15])
