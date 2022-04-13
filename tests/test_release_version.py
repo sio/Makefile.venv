@@ -39,11 +39,16 @@ class TestVersion(TestCase):
     def test_git_tag(self):
         '''Check that git tag contains valid version information'''
         cmd = 'git log -1 --format=%D --'.split() + [self.makefile]
-        process = run(cmd, stdout=PIPE)
+        process = run(cmd, stdout=PIPE, stderr=PIPE)
         git_log = process.stdout.decode()
         match = self.pattern.search(git_log)
         if not match:
-            raise ValueError('version pattern not found in {!r}'.format(' '.join(cmd)))
+            debug = 'exit code: {rc}\nstdout:\n{stdout}\nstderr:\n{stderr}'.format(
+                rc = process.returncode,
+                stdout = git_log,
+                stderr = process.stderr.decode(),
+            )
+            raise ValueError('version pattern not found in {!r}:\n{}'.format(' '.join(cmd), debug))
         git_version = match.group(1)
         self.assertEqual(git_version, get_version(self.makefile))
 
