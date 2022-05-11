@@ -29,7 +29,7 @@ class TestVersion(TestCase):
 
     @skip_dev
     def test_version(self):
-        '''Check that versions in README and in Makefile.venv match'''
+        '''Check that release versions in README and in Makefile.venv match'''
         self.assertEqual(
                 get_version(self.readme),
                 get_version(self.makefile),
@@ -37,7 +37,10 @@ class TestVersion(TestCase):
 
     @skip_dev
     def test_git_tag(self):
-        '''Check that git tag contains valid version information'''
+        '''
+        Check that git tag contains valid release version
+        (versions ending with -dev suffix are skipped)
+        '''
         cmd = 'git log -1 --format=%D --'.split() + [self.makefile]
         process = run(cmd, stdout=PIPE, stderr=PIPE)
         git_log = process.stdout.decode()

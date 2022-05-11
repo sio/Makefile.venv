@@ -27,7 +27,10 @@ class TestChecksum(TestCase):
 
     @skip_dev
     def test_checksum(self):
-        '''Check that installation instructions contain valid checksum'''
+        '''
+        Check that installation instructions contain valid checksum
+        (versions ending with -dev suffix are skipped)
+        '''
         recorded = self.read_checksum(self.readme)
         calculated = calculate_checksum(self.makefile)
         self.assertEqual(recorded, calculated)
