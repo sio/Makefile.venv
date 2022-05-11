@@ -2,7 +2,7 @@ import re
 from hashlib import sha256
 from unittest import TestCase
 
-from .test_release_version import skip_dev
+from .test_release_version import skip_dev, DEV_VERSION_EXPLAINED
 
 
 def calculate_checksum(filename):
@@ -33,5 +33,9 @@ class TestChecksum(TestCase):
         '''
         recorded = self.read_checksum(self.readme)
         calculated = calculate_checksum(self.makefile)
-        self.assertEqual(recorded, calculated)
+        self.assertEqual(
+            recorded,
+            calculated,
+            '{} but versions in README and in Makefile.venv do not match'.format(DEV_VERSION_EXPLAINED)
+        )
 

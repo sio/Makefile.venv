@@ -4,6 +4,7 @@ from subprocess import run, PIPE
 
 
 VERSION_PATTERN = re.compile(r'\b(v\d{4}\.\d{2}\.\d{2}(?:-\w+|))\b', re.IGNORECASE)
+DEV_VERSION_EXPLAINED = 'Proper release detected (version does not end with -dev suffix)'
 
 
 def get_version(filename, pattern=VERSION_PATTERN):
@@ -51,9 +52,17 @@ class TestVersion(TestCase):
                 stdout = git_log,
                 stderr = process.stderr.decode(),
             )
-            raise ValueError('version pattern not found in {!r}:\n{}'.format(' '.join(cmd), debug))
+            raise AssertionError('{} but version pattern not found in {!r}:\n{}'.format(
+                DEV_VERSION_EXPLAINED,
+                ' '.join(cmd),
+                debug)
+            )
         git_version = match.group(1)
-        self.assertEqual(git_version, get_version(self.makefile))
+        self.assertEqual(
+            git_version,
+            get_version(self.makefile),
+            '{} but git tag does not match the version in Makefile.venv'.format(DEV_VERSION_EXPLAINED)
+        )
 
     @skip_dev
     def test_changelog(self):
