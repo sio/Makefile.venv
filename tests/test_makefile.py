@@ -18,7 +18,10 @@ class TestInvocation(MakefileTestCase):
     def test_creating(self, *cli_args):
         '''Create empty virtual environment'''
         make = self.make('debug-venv', 'venv', *cli_args)
-        self.assertTrue(os.path.isdir(os.path.join(self.tmpdir.name, '.venv')))
+        self.assertTrue(
+            os.path.isdir(os.path.join(self.tmpdir.name, '.venv')),
+            msg='Failed to create virtual environment',
+        )
 
         version = self.make('show-venv', *cli_args)
         for line in ('python ', 'pip ', 'venv: '):
@@ -26,7 +29,10 @@ class TestInvocation(MakefileTestCase):
                 self.assertIn(line.lower(), version.stdout.lower())
 
         self.make('clean-venv', *cli_args)
-        self.assertFalse(os.path.isdir(os.path.join(self.tmpdir.name, '.venv')))
+        self.assertFalse(
+            os.path.isdir(os.path.join(self.tmpdir.name, '.venv')),
+            msg='Failed to remove virtual environment',
+        )
 
     @slow_test
     def test_no_builtin_variables(self):
