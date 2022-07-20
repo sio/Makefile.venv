@@ -51,16 +51,21 @@ jobs:
     name: windows-cygwin
     runs-on: windows-latest
     env:
-      CYGWIN_ROOT: cygwin
-      CYGWIN_PACKAGES: make,python3,git,bash,python-pip-wheel,python-setuptools-wheel,python-wheel-wheel
+      CYGWIN_ROOT: D:\cygwin
+      CYGWIN_PACKAGES: "\
+        make,\
+        python3,\
+        git,\
+        bash,\
+        python-pip-wheel,\
+        python-setuptools-wheel,\
+        python-wheel-wheel"
       CYGWIN_MIRROR: http://mirrors.kernel.org/sourceware/cygwin/
       LC_ALL: C.UTF-8
       LANG: C.UTF-8
+      SHELLOPTS: igncr
     steps:
       - uses: actions/checkout@v1
-      - name: Use absolute path for CYGWIN_ROOT
-        run: echo "CYGWIN_ROOT=$GITHUB_WORKSPACE\\$CYGWIN_ROOT" >> $GITHUB_ENV
-        shell: bash
       - name: Install Cygwin
         run: >
           md %CYGWIN_ROOT% &&
@@ -76,17 +81,26 @@ jobs:
           --root "%CYGWIN_ROOT%"
           --packages "%CYGWIN_PACKAGES%"
         shell: cmd
-      - name: Change ownership of current directory (https://stackoverflow.com/questions/7184941)
+      - name: Workaround for repo permissions mixup (https://stackoverflow.com/questions/7184941)
+        shell: D:\cygwin\bin\bash.exe "{0}"
         run: |
-          cygwin\bin\bash.exe -c "/bin/chown $(id -u):$(id -g) ."
-          cygwin\bin\bash.exe -c "git config --global --add safe.directory $PWD"
+          set -v
+          export PATH=/bin
+          set -euo pipefail
+          chown $(id -u):$(id -g) .
+          mkdir -p "$HOME"
+          touch "$HOME/.gitconfig"
+          git config --global --add safe.directory "$PWD"
       - name: Run automated tests
-        run: cygwin\bin\bash.exe -c "export PATH=/bin; make -C tests test-verbose"
+        shell: D:\cygwin\bin\bash.exe "{0}"
+        run: |
+          export PATH=/bin
+          make -C tests test-verbose
         env:
           TEST_SUBPROCESS_TIMEOUT: 300
       - name: Failure diagnostics
         run: |
-         find cygwin -type f
+         find "$CYGWIN_ROOT" -type f
          env
         shell: bash
         if: failure()
