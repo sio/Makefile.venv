@@ -14,6 +14,16 @@
 -->
 
 
+## v2022.07.20
+
+* Support another edge case: "make -R" (running without builtin variables)
+* Minor documentation improvements
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2022.07.20)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2022.07.20)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2022.04.13...v2022.07.20)
+
+
 ## v2022.04.13
 
 * Makefile.venv is now installable from [PyPI](https://pypi.org/project/Makefile.venv/)
