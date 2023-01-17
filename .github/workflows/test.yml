@@ -20,7 +20,7 @@ jobs:
           - windows-latest
           - macos-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Install OS packages for Python
         run: sudo apt-get update && sudo apt-get -y install python3-venv
@@ -65,7 +65,7 @@ jobs:
       LANG: C.UTF-8
       SHELLOPTS: igncr
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Install Cygwin
         run: >
           md %CYGWIN_ROOT% &&
