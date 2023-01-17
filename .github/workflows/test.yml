@@ -21,6 +21,8 @@ jobs:
           - macos-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Install OS packages for Python
         run: sudo apt-get update && sudo apt-get -y install python3-venv
