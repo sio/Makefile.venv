@@ -182,11 +182,12 @@ requirements.txt even when the file exists.
 
 [pip-compile]: docs/howto-pip-compile.md
 
-##### SETUP_PY
+##### SETUP_PY, SETUP_CFG, PYPROJECT_TOML, VENV_LOCAL_PACKAGE
 
-Space separated list of paths to setup․py files. Corresponding packages will
-be installed into venv in [editable mode] along with all their dependencies.
-*Default: setup․py*
+Space separated list of paths to files that contain build instructions
+for local Python packages. Corresponding packages will be installed
+into venv in [editable mode] along with all their dependencies.
+*Default: setup.py setup.cfg pyproject.toml (whichever present)*
 
 Non-existent and empty values are treated in the same way as for REQUIREMENTS_TXT.
 
@@ -304,7 +305,7 @@ log.
 
 ## License and copyright
 
-Copyright 2019-2022 Vitaly Potyarkin
+Copyright 2019-2023 Vitaly Potyarkin
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

@@ -1,0 +1,6 @@
+[project]
+name = "hello"
+version = "0.0.1"
+dependencies = [
+    "pyfiglet",
+]

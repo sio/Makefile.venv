@@ -54,11 +54,11 @@
 #       recipes for creating such files must be provided by the main Makefile.
 #       Providing empty value (REQUIREMENTS_TXT=) turns off processing of
 #       requirements.txt even when the file exists.
-#   SETUP_PY
-#       Space separated list of paths to setup.py files.
-#       Corresponding packages will be installed into venv in editable mode
-#       along with all their dependencies
-#       Default: setup.py
+#   SETUP_PY, SETUP_CFG, PYPROJECT_TOML, VENV_LOCAL_PACKAGE
+#       Space separated list of paths to files that contain build instructions
+#       for local Python packages. Corresponding packages will be installed
+#       into venv in editable mode along with all their dependencies.
+#       Default: setup.py setup.cfg pyproject.toml (whichever present)
 #
 #       Non-existent and empty values are treated in the same way as for REQUIREMENTS_TXT.
 #   WORKDIR
@@ -72,7 +72,7 @@
 # implementations.
 #
 #
-# Copyright (c) 2019-2020 Vitaly Potyarkin
+# Copyright (c) 2019-2023 Vitaly Potyarkin
 #
 # Licensed under the Apache License, Version 2.0
 #    <http://www.apache.org/licenses/LICENSE-2.0>
@@ -88,6 +88,8 @@ VENVDIR?=$(WORKDIR)/.venv
 REQUIREMENTS_TXT?=$(wildcard requirements.txt)  # Multiple paths are supported (space separated)
 SETUP_PY?=$(wildcard setup.py)                  # Multiple paths are supported (space separated)
 SETUP_CFG?=$(foreach s,$(SETUP_PY),$(wildcard $(patsubst %setup.py,%setup.cfg,$(s))))
+PYPROJECT_TOML?=$(wildcard pyproject.toml)
+VENV_LOCAL_PACKAGE?=$(SETUP_PY) $(SETUP_CFG) $(PYPROJECT_TOML)
 MARKER=.initialized-with-Makefile.venv
 
 
@@ -202,8 +204,7 @@ debug-venv:
 	$(info SHELL="$(SHELL)")
 	$(info PY="$(PY)")
 	$(info REQUIREMENTS_TXT="$(REQUIREMENTS_TXT)")
-	$(info SETUP_PY="$(SETUP_PY)")
-	$(info SETUP_CFG="$(SETUP_CFG)")
+	$(info VENV_LOCAL_PACKAGE="$(VENV_LOCAL_PACKAGE)")
 	$(info VENVDIR="$(VENVDIR)")
 	$(info VENVDEPENDS="$(VENVDEPENDS)")
 	$(info WORKDIR="$(WORKDIR)")
@@ -217,11 +218,8 @@ ifneq ($(strip $(REQUIREMENTS_TXT)),)
 VENVDEPENDS+=$(REQUIREMENTS_TXT)
 endif
 
-ifneq ($(strip $(SETUP_PY)),)
-VENVDEPENDS+=$(SETUP_PY)
-endif
-ifneq ($(strip $(SETUP_CFG)),)
-VENVDEPENDS+=$(SETUP_CFG)
+ifneq ($(strip $(VENV_LOCAL_PACKAGE)),)
+VENVDEPENDS+=$(VENV_LOCAL_PACKAGE)
 endif
 
 $(VENV):
@@ -232,8 +230,8 @@ $(VENV)/$(MARKER): $(VENVDEPENDS) | $(VENV)
 ifneq ($(strip $(REQUIREMENTS_TXT)),)
 	$(VENV)/pip install $(foreach path,$(REQUIREMENTS_TXT),-r $(path))
 endif
-ifneq ($(strip $(SETUP_PY)),)
-	$(VENV)/pip install $(foreach path,$(SETUP_PY),-e $(dir $(path)))
+ifneq ($(strip $(VENV_LOCAL_PACKAGE)),)
+	$(VENV)/pip install $(foreach path,$(sort $(VENV_LOCAL_PACKAGE)),-e $(dir $(path)))
 endif
 	$(call touch,$(VENV)/$(MARKER))
 

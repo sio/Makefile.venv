@@ -22,6 +22,11 @@ class TestDependencies(MakefileTestCase):
         self.common_dependency_checks('setup.py')
 
     @slow_test
+    def test_pyproject_toml(self):
+        '''Check that pyproject.toml is being processed correctly'''
+        self.common_dependency_checks('pyproject.toml')
+
+    @slow_test
     def test_setup_cfg(self):
         '''Check that setup.cfg is being processed correctly'''
         # Repeat setup.py test

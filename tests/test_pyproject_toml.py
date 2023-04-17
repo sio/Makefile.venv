@@ -2,62 +2,66 @@ from time import sleep
 from tests.common import MakefileTestCase, slow_test
 from tests.test_dependencies import touch
 
-class TestSetupPy(MakefileTestCase):
+class TestPyprojectToml(MakefileTestCase):
 
-    def test_setup_py_empty(self):
+    def test_empty(self):
         '''
-        Empty value for SETUP_PY should result in ignoring the file
+        Empty value for PYPROJECT_TOML should result in ignoring the file
         even when it exists
         '''
         sample_makefile = '\n'.join((
-            'SETUP_PY=',
+            'PYPROJECT_TOML=',
             'include {{ Makefile.venv }}',
         ))
         makefile = self.copy(content=sample_makefile, makefile=True)
-        self.copy('setup.py')
+        self.copy('pyproject.toml')
         make = self.make(makefile=makefile, dry_run=True)
         self.assertNotIn('/pip install', make.stdout)
 
-    def test_setup_py_nonexistent(self):
+    def test_nonexistent(self):
         '''
-        Nonexistent path for SETUP_PY should result in error
+        Nonexistent path for PYPROJECT_TOML should result in error
         because non-default values are treated as hard dependencies
         and are expected to be made via Makefile recipe
         '''
         sample_makefile = '\n'.join((
-            'SETUP_PY=nonexistent.py',
+            'PYPROJECT_TOML=nonexistent.toml',
             'include {{ Makefile.venv }}',
         ))
         makefile = self.copy(content=sample_makefile, makefile=True)
-        self.copy('setup.py')
+        self.copy('pyproject.toml')
         make = self.make(makefile=makefile, dry_run=True, returncode=None)
         self.assertEqual(make.returncode, 2)
         self.assertIn('no rule to make target', make.stderr.lower())
         self.assertNotIn('/pip install', make.stdout)
 
     @slow_test
-    def test_setup_py_multiple(self):
+    def test_multiple(self):
         '''
-        Check that multiple setup.py files are supported
+        Check that multiple pyproject.toml files are supported
         '''
         files = [
-            'setup.py',
+            'pyproject.toml',
             'hello.py',
         ]
         for dest_dir in ['one', 'two']:
             for filename in files:
                 self.copy(filename, dest_dir=dest_dir)
-        setup_content = '\n'.join((
-            'from setuptools import setup',
-            'setup(name="hello2", install_requires=["console",])'
-        ))
+        translate = {
+            'name = "hello"': 'name = "hello2"',
+            'pyfiglet': 'console'
+        }
+        with open('tests/data/pyproject.toml') as f:
+            setup_content = f.read()
+        for old, new in translate.items():
+            setup_content = setup_content.replace(old, new)
         second_setup_py = self.copy(  # avoid package name collision
-            'setup.py',
+            'pyproject.toml',
             content=setup_content,
             dest_dir='two',
         )
         makefile_content = '\n'.join((
-            'SETUP_PY=one/setup.py two/setup.py',
+            'PYPROJECT_TOML=one/pyproject.toml two/pyproject.toml',
             'include {{ Makefile.venv }}',
         ))
         makefile = self.copy(content=makefile_content, makefile=True)
@@ -77,23 +81,3 @@ class TestSetupPy(MakefileTestCase):
         touch(second_setup_py)
         make = self.make('venv', makefile=makefile, dry_run=True)
         self.assertIn('pip install -e', make.stdout)
-
-    def test_setup_cfg_multiple(self):
-        '''Check that multiple setup.cfg files are picked up correctly'''
-        for dirname in {'one', 'two'}:
-            for filename in {'setup.py', 'setup.cfg'}:
-                self.copy(filename, content='', dest_dir=dirname)
-        makefile = self.copy(makefile=True, content='\n'.join((
-            'SETUP_PY=one/setup.py two/setup.py',
-            'include {{ Makefile.venv }}',
-        )))
-        make = self.make('debug-venv', makefile=makefile)
-        count = 0
-        for line in make.stdout.splitlines():
-            if 'one/setup.cfg two/setup.cfg' not in line:
-                continue
-            if 'VENVDEPENDS=' in line:
-                count += 1
-            if 'VENV_LOCAL_PACKAGE=' in line:
-                count += 1
-        self.assertEqual(count, 2, "Unexpected number of setup.cfg lines in stdout:\n{}".format(make.stdout))
