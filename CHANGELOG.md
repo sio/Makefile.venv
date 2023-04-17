@@ -14,6 +14,20 @@
 -->
 
 
+## v2023.04.17
+
+* Added support for [pyproject.toml]
+  (thanks to [@sla-te], issue [#22])
+
+[pyproject.toml]: https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/
+[@sla-te]: https://github.com/sla-te
+[#22]: https://github.com/sio/Makefile.venv/issues/22
+
+[Source code tree](https://github.com/sio/Makefile.venv/tree/v2023.04.17)
+| [Tarball](https://github.com/sio/Makefile.venv/tarball/v2023.04.17)
+| [Commit history](https://github.com/sio/Makefile.venv/compare/v2022.07.20...v2023.04.17)
+
+
 ## v2022.07.20
 
 * Support another edge case: "make -R" (running without builtin variables)
