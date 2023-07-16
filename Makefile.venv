@@ -40,6 +40,9 @@
 #               $(VENV)/pyflakes .
 #       See `ipython` target below for another example.
 #
+#		If a $(WORKDIR)/.env file exists, it will be sourced prior to exec'ing an
+#		interactive shell. See python, ipython, shell, bash and zsh targets above. 
+#
 # This Makefile can be configured via following variables:
 #   PY
 #       Command name for system Python interpreter. It is used only initially to
@@ -242,19 +245,19 @@ endif
 
 .PHONY: python
 python: venv
-	exec $(VENV)/python
+	[ -f $(WORKDIR)/.env ] && . $(WORKDIR)/.env; exec $(VENV)/python
 
 .PHONY: ipython
 ipython: $(VENV)/ipython
-	exec $(VENV)/ipython
+	[ -f $(WORKDIR)/.env ] && . $(WORKDIR)/.env; exec $(VENV)/ipython
 
 .PHONY: shell
 shell: venv
-	. $(VENV)/activate && exec $(notdir $(SHELL))
+	[ -f $(WORKDIR)/.env ] && . $(WORKDIR)/.env; . $(VENV)/activate && exec $(notdir $(SHELL))
 
 .PHONY: bash zsh
 bash zsh: venv
-	. $(VENV)/activate && exec $@
+	[ -f $(WORKDIR)/.env ] && . $(WORKDIR)/.env; . $(VENV)/activate && exec $@
 
 
 #
