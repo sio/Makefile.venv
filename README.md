@@ -232,7 +232,7 @@ include Makefile.venv
 Larger sample from a real project can be seen
 [here](https://github.com/sio/issyours/blob/master/Makefile).
 Also see [an introductory blog
-post](https://potyarkin.ml/posts/2019/manage-python-virtual-environment-from-your-makefile/)
+post](https://potyarkin.com/posts/2019/manage-python-virtual-environment-from-your-makefile/)
 from project author.
 
 Command line:

@@ -214,9 +214,9 @@
 
 * New targets for interactive shells in virtual environment:
   `make bash`, `make zsh`
-* Promotional post in author's blog: [https://potyarkin.ml/...][blog]
+* Promotional post in author's blog: [https://potyarkin.com/...][blog]
 
-[blog]: https://potyarkin.ml/posts/2019/manage-python-virtual-environment-from-your-makefile/
+[blog]: https://potyarkin.com/posts/2019/manage-python-virtual-environment-from-your-makefile/
 
 [Source code tree](https://github.com/sio/Makefile.venv/tree/v2019.10.01)
 | [Tarball](https://github.com/sio/Makefile.venv/tarball/v2019.10.01)
