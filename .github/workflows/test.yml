@@ -10,23 +10,42 @@ on:
 
 
 jobs:
-  test:
+  linux:
+    name: linux-py${{ matrix.py }}
+    runs-on: ubuntu-latest
+    container: python:${{ matrix.py }}
+    strategy:
+      matrix:
+        py:
+          - '3.9'
+          - '3.10'
+          - '3.11'
+          - '3.12'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Run functional tests
+        run:  make -C tests test-verbose
+        env:
+          TEST_SUBPROCESS_TIMEOUT: 300
+
+      - name: Run packaging tests
+        run:  make -C pypi test
+
+  other:
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
-          - ubuntu-latest
           - windows-latest
           - macos-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: Install OS packages for Python
-        run: sudo apt-get update && sudo apt-get -y install python3-venv
-        if: matrix.os == 'ubuntu-latest'
 
       - name: Remove py.exe on Windows
         run: del /f %WINDIR%\py.exe
