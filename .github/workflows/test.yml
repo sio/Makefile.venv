@@ -26,6 +26,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: CI setup
+        run: |-
+          git config --global --add safe.directory $(pwd)
+
       - name: Run functional tests
         run:  make -C tests test-verbose
         env:
