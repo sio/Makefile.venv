@@ -14,6 +14,8 @@ Feature in use:
 
 from tests.common import MakefileTestCase, slow_test
 
+CUSTOM_PACKAGE = 'noop==1.0'
+
 class TestMakefileRecipeOverride(MakefileTestCase):
 
     @slow_test
@@ -22,8 +24,8 @@ class TestMakefileRecipeOverride(MakefileTestCase):
         makefile = self.copy('recipe-override.mk', makefile=True)
 
         first = self.make('freeze', makefile=makefile)
-        self.assertIn('dummy-test==0.1.3', first.stdout.splitlines())
+        self.assertIn(CUSTOM_PACKAGE, first.stdout.splitlines())
 
         second = self.make('freeze', makefile=makefile)
         self.assertNotIn('pip install', second.stdout)
-        self.assertIn('dummy-test==0.1.3', second.stdout.splitlines())
+        self.assertIn(CUSTOM_PACKAGE, second.stdout.splitlines())

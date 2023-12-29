@@ -2,7 +2,7 @@
 
 include {{ Makefile.venv }}
 
-CUSTOM_PACKAGE=dummy_test==0.1.3
+CUSTOM_PACKAGE=noop==1.0
 
 $(VENV):
 	$(PY) -m venv $(VENVDIR)
